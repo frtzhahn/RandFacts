@@ -1,0 +1,57 @@
+<!-- HEADER/SUPER POM -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<modelVersion>4.0.0</modelVersion>
+
+	<!-- PROJECT ID SECTION/ PROJECT IDENTITY-->
+	<groupId>com.mocha</groupId>
+	<artifactId>RandFacts</artifactId>
+	<version>1.0-SNAPSHOT</version>
+
+	<!-- PROPERTIES/MAVEN COMPILER SECTION-->
+	<!-- openjdk 17 LTS maven compiler/java for long term support for the compiler -->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- <maven.compiler.source>17</maven.compiler.source> -->
+		<maven.compiler.release>17</maven.compiler.release>
+	</properties>
+
+	<!-- DEPENDENCY SECTION -->
+	<dependencies>
+
+		<!-- JAVAFX CONTROLS DEPENDENCIES SECTION-->
+		<!-- includes interactive elements from javafx framework like button and sliders-->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+			<version>17.0.2</version>
+		</dependency>
+
+		<!-- JAVAFX DEPENDENCIES SECTION-->
+		<!-- xml layout engine -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-fxml</artifactId>
+			<version>17.0.2</version>
+		</dependency>
+	</dependencies>
+
+	<!-- PLUGINS FOR TO AUTO RUN DEPENDENCIES -->
+	<build>
+		<plugins>
+			<plugin>
+				<!-- javafx plugin to auto run javafx -->
+				<groupId>org.openjfx</groupId>
+				<artifactId>javafx-maven-plugin</artifactId>
+				<version>0.0.8</version>
+					<configuration>
+						<mainClass>com.mocha.MainApp</mainClass>
+					</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+
+
+
