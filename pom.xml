@@ -5,7 +5,7 @@
 <modelVersion>4.0.0</modelVersion>
 
 	<!-- PROJECT ID SECTION/ PROJECT IDENTITY-->
-	<groupId>com.mocha</groupId>
+	<groupId>com.randfacts</groupId>
 	<artifactId>RandFacts</artifactId>
 	<version>1.0-SNAPSHOT</version>
 
@@ -46,7 +46,7 @@
 				<artifactId>javafx-maven-plugin</artifactId>
 				<version>0.0.8</version>
 					<configuration>
-						<mainClass>com.mocha.MainApp</mainClass>
+						<mainClass>com.randfacts.MainApp</mainClass>
 					</configuration>
 			</plugin>
 		</plugins>
