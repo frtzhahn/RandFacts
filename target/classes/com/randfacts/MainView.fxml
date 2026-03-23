@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import java.net.URL?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.randfacts.MainController">
+
+	<stylesheets>
+		<URL value="@main.css" />
+	</stylesheets>
 
 	<ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true">
 		<image>
@@ -12,6 +19,22 @@
 		</image>
 	</ImageView>
 
+	<HBox prefHeight="80.0"
+		AnchorPane.bottomAnchor="20.0"
+		AnchorPane.leftAnchor="0.0"
+		AnchorPane.rightAnchor="0.0"
+		alignment="CENTER"
+		spacing="40.0">
+
+	<Label text="HOMEPAGE" styleClass="nav-item" />
+	<Label text="SAVED FACTS" styleClass="nav-item" />
+	<Label text="HISTORY" styleClass="nav-item" />
+	<Label text="DASHBOARD" styleClass="nav-item" />
+	<Label text="ABOUT US" styleClass="nav-item" />
+
+	</HBox>
+
 </AnchorPane>
+
 
 

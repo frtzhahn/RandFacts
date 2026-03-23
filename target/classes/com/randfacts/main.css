@@ -1,0 +1,23 @@
+/* main.css - RandFacts Industrial Grade Styling */
+
+@font-face {
+	src: url("fonts/PixelifySans-Regular.ttf");
+}
+
+.nav-item {
+	-fx-text-fill: white;
+  -fx-font-size: 16px;
+  -fx-font-family: "Pixelify Sans Regular"; 
+  -fx-padding: 10 20 10 20; 
+  -fx-cursor: hand; 
+}
+
+.nav-item:hover {
+	-fx-background-color: rgb(77, 77, 77);
+}
+
+.active {
+	-fx-background-color: #555555;
+  -fx-background-radius: 0;
+  -fx-text-fill: white;
+}
