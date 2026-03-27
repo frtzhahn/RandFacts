@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" alignment="TOP_CENTER" spacing="40.0" style="-fx-background-color: transparent; -fx-padding: 40px;">
+    
+    <Label text="INDUSTRIAL DASHBOARD" styleClass="title"/>
+    
+    <HBox alignment="CENTER" spacing="30.0">
+        <!-- Stat Card 1 -->
+        <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: rgba(60,60,60,0.8); -fx-background-radius: 20px; -fx-padding: 30px; -fx-min-width: 250px;">
+            <Label text="TOTAL KNOWLEDGE" styleClass="subtitle" style="-fx-font-size: 12px;"/>
+            <Label text="1,240,582" styleClass="stat-value"/>
+            <Label text="FACTS INDEXED" styleClass="subtitle" style="-fx-font-size: 10px;"/>
+        </VBox>
+        
+        <!-- Stat Card 2 -->
+        <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: rgba(60,60,60,0.8); -fx-background-radius: 20px; -fx-padding: 30px; -fx-min-width: 250px;">
+            <Label text="SYSTEM UPTIME" styleClass="subtitle" style="-fx-font-size: 12px;"/>
+            <Label text="100.00%" styleClass="stat-value" style="-fx-text-fill: #00ff00;"/>
+            <Label text="OPTIMAL PERFORMANCE" styleClass="subtitle" style="-fx-font-size: 10px;"/>
+        </VBox>
+        
+        <!-- Stat Card 3 -->
+        <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: rgba(60,60,60,0.8); -fx-background-radius: 20px; -fx-padding: 30px; -fx-min-width: 250px;">
+            <Label text="USER PREFERENCES" styleClass="subtitle" style="-fx-font-size: 12px;"/>
+            <Label text="SECURE" styleClass="stat-value"/>
+            <Label text="ENCRYPTED STORAGE" styleClass="subtitle" style="-fx-font-size: 10px;"/>
+        </VBox>
+    </HBox>
+    
+    <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: rgba(255,255,255,0.05); -fx-background-radius: 20px; -fx-padding: 20px; -fx-max-width: 900px;">
+         <Label text="SYSTEM LOGS" styleClass="subtitle" style="-fx-font-size: 12px; -fx-font-weight: bold;"/>
+         <Label text="[SUCCESS] Data fetch synchronized." styleClass="fact-text" style="-fx-font-family: 'Courier New'; -fx-font-size: 12px;"/>
+         <Label text="[SUCCESS] Database connection established." styleClass="fact-text" style="-fx-font-family: 'Courier New'; -fx-font-size: 12px;"/>
+         <Label text="[WAITING] Awaiting discovery event..." styleClass="fact-text" style="-fx-font-family: 'Courier New'; -fx-font-size: 12px; -fx-text-fill: #aaa;"/>
+    </VBox>
+
+</VBox>
