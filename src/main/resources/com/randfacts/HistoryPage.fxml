@@ -1,37 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" />
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-
-<VBox xmlns:fx="http://javafx.com/fxml" alignment="TOP_CENTER" spacing="30.0" style="-fx-background-color: transparent; -fx-padding: 40px;">
-    
-    <Label text="HISTORY" styleClass="title"/>
-    
-    <VBox spacing="15.0" style="-fx-background-color: rgba(60,60,60,0.8); -fx-background-radius: 20px; -fx-padding: 30px; -fx-max-width: 900px; -fx-min-width: 900px;">
-        <Label text="MOST RECENT DISCOVERIES" styleClass="subtitle" style="-fx-font-size: 12px;"/>
-        
-        <VBox spacing="10.0">
-            <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-background-color: rgba(255,255,255,0.05); -fx-padding: 15px; -fx-background-radius: 10px;">
-                <Label text="14:24" styleClass="subtitle" style="-fx-font-size: 10px;"/>
-                <Label text="The average person spends about six months of their life waiting for red lights to turn green." styleClass="fact-text"/>
-            </HBox>
-            
-            <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-background-color: rgba(255,255,255,0.05); -fx-padding: 15px; -fx-background-radius: 10px;">
-                <Label text="13:58" styleClass="subtitle" style="-fx-font-size: 10px;"/>
-                <Label text="A bolt of lightning contains enough energy to toast 100,000 slices of bread." styleClass="fact-text"/>
-            </HBox>
-            
-            <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-background-color: rgba(255,255,255,0.05); -fx-padding: 15px; -fx-background-radius: 10px;">
-                <Label text="13:12" styleClass="subtitle" style="-fx-font-size: 10px;"/>
-                <Label text="Honey never spoils. Archaeologists have found edible 3,000-year-old honey in Egyptian tombs." styleClass="fact-text"/>
-            </HBox>
-            
-            <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-background-color: rgba(255,255,255,0.05); -fx-padding: 15px; -fx-background-radius: 10px;">
-                <Label text="12:45" styleClass="subtitle" style="-fx-font-size: 10px;"/>
-                <Label text="Sloths can hold their breath underwater for up to 40 minutes." styleClass="fact-text"/>
-            </HBox>
-        </VBox>
-    </VBox>
-
-</VBox>
