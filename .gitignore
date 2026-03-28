@@ -1,0 +1,44 @@
+# build tools
+.mvn/
+mvnw
+mvnw.cmd
+
+# build artifacts
+*.class
+*.log
+*.jar
+*.war
+*.ear
+target/
+
+# intellij IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# vscode
+.vscode/
+
+# os file
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# windows crash dumps
+*.dmp
+CrashDumps/
+
+# linux core dumps
+core
+core.*
+
+
+# env and secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
