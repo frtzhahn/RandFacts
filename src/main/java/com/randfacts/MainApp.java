@@ -3,10 +3,10 @@ package com.randfacts;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.text.Font;
-import javafx.stage.StageStyle;
 
 public class MainApp extends Application{
 	@Override
@@ -20,15 +20,12 @@ public class MainApp extends Application{
 
 		stage.initStyle(StageStyle.UNDECORATED);
 		stage.setScene(scene);
-		stage.setTitle("RandFacts - Industrial Grade UI");
+		stage.setTitle("RandFacts");
 		stage.show();
-		
-		ResizeHelper.addResizeListener(stage);
     
 	}
 
 	public static void main(String[] args) {
-		launch();
-
-	}
+        launch();
+    }
 }

@@ -1,104 +1,93 @@
 package com.randfacts;
 
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.stage.Stage;
-import javafx.event.ActionEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafx.scene.Node;
 import java.io.IOException;
 
 public class MainController{
-	
+
 	@FXML
 	private StackPane contentArea;
 
 	@FXML
 	private Label navHomepage, navSavedFacts, navHistory, navDashboard, navAboutUs;
-	
+
 	private double xOffset = 0;
 	private double yOffset = 0;
 
 	@FXML
 	public void initialize(){
-
+		// terminal success project build message
 		System.out.println("\u001b[32mRandFacts Project: maven build success on your machine\u001b[0m");
-
-		// Load Homepage by default
-		loadPage("Homepage.fxml");
-		setActiveNav(navHomepage);
-
+		// Reference: RandFacts/src/main/resources/com/randfacts/Homepage.fxml
+		loadPage("Homepage");
+		setActiveNavItem(navHomepage);
 	}
 
-	private void setActiveNav(Label activeNav) {
-		navHomepage.getStyleClass().remove("active");
-		navSavedFacts.getStyleClass().remove("active");
-		navHistory.getStyleClass().remove("active");
-		navDashboard.getStyleClass().remove("active");
-		navAboutUs.getStyleClass().remove("active");
-		
-		activeNav.getStyleClass().add("active");
+	@FXML
+	private void goToHomepage() { 
+		loadPage("Homepage"); 
+		setActiveNavItem(navHomepage);
 	}
 
-	private void loadPage(String fxml) {
-		try {
-			Parent page = FXMLLoader.load(getClass().getResource("/com/randfacts/" + fxml));
-			contentArea.getChildren().setAll(page);
-		} catch (IOException e) {
-			System.err.println("Error loading page: " + fxml);
-			e.printStackTrace();
+	@FXML
+	private void goToSavedFacts() { 
+		loadPage("SavedFacts"); 
+		setActiveNavItem(navSavedFacts);
+	}
+
+	@FXML
+	private void goToHistory() { 
+		loadPage("History"); 
+		setActiveNavItem(navHistory);
+	}
+
+	@FXML
+	private void goToDashboard() { 
+		loadPage("Dashboard"); 
+		setActiveNavItem(navDashboard);
+	}
+
+	@FXML
+	private void goToAboutUs() { 
+		loadPage("AboutUs"); 
+		setActiveNavItem(navAboutUs);
+	}
+
+	private void setActiveNavItem(Label activeLabel) {
+		// Reset all labels to default state
+		Label[] navLabels = {navHomepage, navSavedFacts, navHistory, navDashboard, navAboutUs};
+		for (Label label : navLabels) {
+			label.getStyleClass().remove("active");
+		}
+		// Apply active class to the clicked label
+		if (!activeLabel.getStyleClass().contains("active")) {
+			activeLabel.getStyleClass().add("active");
 		}
 	}
 
 	@FXML
-	private void goToHomepage(MouseEvent event) {
-		loadPage("Homepage.fxml");
-		setActiveNav(navHomepage);
+	private void closeWindow(javafx.event.ActionEvent event) {
+		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		stage.close();
 	}
 
 	@FXML
-	private void goToSavedFacts(MouseEvent event) {
-		loadPage("SavedFactsPage.fxml");
-		setActiveNav(navSavedFacts);
-	}
-
-	@FXML
-	private void goToHistory(MouseEvent event) {
-		loadPage("HistoryPage.fxml");
-		setActiveNav(navHistory);
-	}
-
-	@FXML
-	private void goToDashboard(MouseEvent event) {
-		loadPage("DashboardPage.fxml");
-		setActiveNav(navDashboard);
-	}
-
-	@FXML
-	private void goToAboutUs(MouseEvent event) {
-		loadPage("AboutUsPage.fxml");
-		setActiveNav(navAboutUs);
-	}
-
-	@FXML
-	private void minimizeWindow(ActionEvent event) {
+	private void minimizeWindow(javafx.event.ActionEvent event) {
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		stage.setIconified(true);
 	}
 
 	@FXML
-	private void maximizeWindow(ActionEvent event) {
+	private void maximizeWindow(javafx.event.ActionEvent event) {
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		stage.setMaximized(!stage.isMaximized());
-	}
-
-	@FXML
-	private void closeWindow(ActionEvent event) {
-		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		stage.close();
 	}
 
 	@FXML
@@ -110,10 +99,25 @@ public class MainController{
 	@FXML
 	private void onMouseDragged(MouseEvent event) {
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		if (!stage.isMaximized()) {
-			stage.setX(event.getScreenX() - xOffset);
-			stage.setY(event.getScreenY() - yOffset);
+		stage.setX(event.getScreenX() - xOffset);
+		stage.setY(event.getScreenY() - yOffset);
+	}
+
+	private void loadPage(String page){
+		try{
+			String fxmlPath = page.equals("Homepage") ? "Homepage.fxml" : page + "Page.fxml";
+
+			Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+
+			contentArea.getChildren().setAll(root);
+			System.out.println("Navigation Engine: Successfully loaded " + fxmlPath);
 		}
+
+		catch(IOException e){
+			System.err.println("Error: Could not load the page " + page);
+			e.printStackTrace();
+		}
+
+
 	}
 } 
- 

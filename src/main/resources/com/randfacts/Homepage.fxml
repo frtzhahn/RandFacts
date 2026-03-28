@@ -1,3 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml" />
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Label?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+	alignment="CENTER"
+	spacing="30.0"
+	style="-fx-background-color: transparent;">
+
+	<Label text="How should we start today?"
+		style="-fx-text-fill: white; -fx-font-size: 40px; -fx-font-family: 'Pixelify Sans Regular';" />
+
+	<StackPane prefHeight="600.0" prefWidth="900.0" maxWidth="1100.0" styleClass="glass-card">
+		<Label text="still on development phase no backend, database, AI generated contents yet pls standby" 
+			style="-fx-text-fill: rgba(255,255,255,0.5); -fx-font-size: 24px; -fx-font-family: 'Fira Code Bold';" />
+	</StackPane>
+
+	</VBox>
+

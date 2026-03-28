@@ -1,23 +1,100 @@
 /* main.css - RandFacts Industrial Grade Styling */
 
 @font-face {
-	src: url("fonts/PixelifySans-Regular.ttf");
+    font-family: "Pixelify Sans Regular";
+    src: url("fonts/PixelifySans-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Pixelify Sans Bold";
+    src: url("fonts/PixelifySans-Bold.ttf");
+}
+
+.root {
+    -fx-font-family: "Pixelify Sans Regular";
+}
+
+.label {
+    -fx-font-family: "Pixelify Sans Regular";
 }
 
 .nav-item {
-	-fx-text-fill: white;
-  -fx-font-size: 16px;
-  -fx-font-family: "Pixelify Sans Regular"; 
-  -fx-padding: 10 20 10 20; 
-  -fx-cursor: hand; 
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-family: "Pixelify Sans Regular"; 
+    -fx-padding: 10 20 10 20; 
+    -fx-cursor: hand; 
 }
 
 .nav-item:hover {
-	-fx-background-color: rgb(77, 77, 77);
+    -fx-background-color: rgba(255, 255, 255, 0.1);
 }
 
 .active {
-	-fx-background-color: #555555;
-  -fx-background-radius: 0;
-  -fx-text-fill: white;
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-background-radius: 5px;
+    -fx-text-fill: white;
+}
+
+.title {
+    -fx-font-size: 32px;
+    -fx-font-family: "Pixelify Sans Regular";
+    -fx-text-fill: white;
+}
+
+.subtitle {
+    -fx-font-size: 16px;
+    -fx-text-fill: #aaa;
+}
+
+.stat-value {
+    -fx-font-size: 24px;
+    -fx-font-family: "Pixelify Sans Bold";
+    -fx-text-fill: white;
+}
+
+.fact-text {
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+}
+
+.glass-card {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+    -fx-background-radius: 40px;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-radius: 40px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 30, 0, 0, 10);
+}
+
+.circle-btn {
+    -fx-background-color: #cccccc;
+    -fx-background-radius: 50px;
+    -fx-min-width: 45px;
+    -fx-min-height: 45px;
+    -fx-max-width: 45px;
+    -fx-max-height: 45px;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-font-family: "Pixelify Sans Regular";
+    -fx-font-size: 20px;
+}
+
+.circle-btn:hover {
+    -fx-background-color: white;
+}
+
+.pill-btn {
+    -fx-background-color: #cccccc;
+    -fx-background-radius: 25px;
+    -fx-padding: 10 30 10 30;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-font-family: "Pixelify Sans Regular";
+    -fx-font-size: 14px;
+}
+
+.pill-btn:hover {
+    -fx-background-color: white;
 }
