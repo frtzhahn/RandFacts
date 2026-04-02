@@ -7,13 +7,19 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.Region?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" alignment="TOP_CENTER" spacing="30.0" style="-fx-background-color: transparent; -fx-padding: 40px 0 0 0;">
+<VBox xmlns:fx="http://javafx.com/fxml" 
+	alignment="TOP_CENTER" 
+	spacing="30.0" 
+	style="-fx-background-color: transparent; -fx-padding: 40px 0 0 0;">
     
     <Label text="ABOUT US" styleClass="title"/>
     
     <!-- Project Repository Card -->
-    <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: rgba(60,60,60,0.8); -fx-background-radius: 30px; -fx-padding: 30px; -fx-max-width: 800px; -fx-min-width: 800px; -fx-min-height: 200px;">
-        <Label text="PROJECT REPOSITORY ON GITHUB" styleClass="subtitle" style="-fx-font-size: 12px;"/>
+		<VBox alignment="CENTER" 
+			spacing="30.0" 
+			styleClass="glass-card-aboutus">
+
+        <Label text="PROJECT REPOSITORY ON GITHUB" styleClass="subtitle" />
         <Region prefHeight="1" style="-fx-background-color: #555; -fx-scale-x: 0.8;"/>
         
         <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-padding: 20px 0 0 50px;">
@@ -25,13 +31,16 @@
                     </image>
                  </ImageView>
             </VBox>
-            <Label text="https://github.com/randfacts" styleClass="stat-value"/>
+            <Label text="https://github.com/RandFacts" styleClass="stat-value"/>
         </HBox>
     </VBox>
     
     <!-- Contributors Card -->
-    <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: rgba(60,60,60,0.8); -fx-background-radius: 30px; -fx-padding: 30px; -fx-max-width: 800px; -fx-min-width: 800px; -fx-min-height: 250px;">
-        <Label text="PROJECT CONTRIBUTORS" styleClass="subtitle" style="-fx-font-size: 12px;"/>
+		<VBox alignment="CENTER" 
+			spacing="10.0" 
+			styleClass="glass-card-aboutus">
+
+        <Label text="PROJECT CONTRIBUTORS" styleClass="subtitle" />
         <Region prefHeight="1" style="-fx-background-color: #555; -fx-scale-x: 0.8;"/>
         
         <VBox alignment="CENTER" spacing="15.0" style="-fx-padding: 10px 0 0 0;">
@@ -44,7 +53,7 @@
                         </image>
                      </ImageView>
                 </VBox>
-                <Label text="https://github.com/frtzhahn" styleClass="fact-text" style="-fx-font-size: 18px;"/>
+                <Label text="https://github.com/frtzhahn" styleClass="stat-value" />
             </HBox>
             
             <!-- Contributor 2 -->
@@ -56,7 +65,7 @@
                         </image>
                      </ImageView>
                 </VBox>
-                <Label text="https://github.com/jamesgabuni" styleClass="fact-text" style="-fx-font-size: 18px;"/>
+                <Label text="https://github.com/jamesgabuni" styleClass="stat-value" />
             </HBox>
         </VBox>
     </VBox>

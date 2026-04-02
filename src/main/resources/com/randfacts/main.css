@@ -1,100 +1,257 @@
 /* main.css - RandFacts Industrial Grade Styling */
 
 @font-face {
-    font-family: "Pixelify Sans Regular";
-    src: url("fonts/PixelifySans-Regular.ttf");
+	font-family: "Pixelify Sans Regular";
+  src: url("fonts/PixelifySans-Regular.ttf");
 }
 
 @font-face {
-    font-family: "Pixelify Sans Bold";
-    src: url("fonts/PixelifySans-Bold.ttf");
+  font-family: "Pixelify Sans Bold";
+  src: url("fonts/PixelifySans-Bold.ttf");
 }
 
 .root {
-    -fx-font-family: "Pixelify Sans Regular";
+  -fx-font-family: "Pixelify Sans Regular";
 }
 
 .label {
-    -fx-font-family: "Pixelify Sans Regular";
+  -fx-font-family: "Pixelify Sans Regular";
 }
 
 .nav-item {
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-font-family: "Pixelify Sans Regular"; 
-    -fx-padding: 10 20 10 20; 
-    -fx-cursor: hand; 
+  -fx-text-fill: white;
+  -fx-font-size: 14px;
+  -fx-font-family: "Pixelify Sans Regular"; 
+  -fx-padding: 10 20 10 20; 
+  -fx-cursor: hand; 
 }
 
 .nav-item:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.1);
+	-fx-background-color: rgba(255, 255, 255, 0.1);
 }
 
 .active {
-    -fx-background-color: rgba(255, 255, 255, 0.2);
-    -fx-background-radius: 5px;
-    -fx-text-fill: white;
+  -fx-background-color: rgba(255, 255, 255, 0.2);
+  -fx-background-radius: 5px;
+  -fx-text-fill: white;
 }
 
 .title {
-    -fx-font-size: 32px;
-    -fx-font-family: "Pixelify Sans Regular";
-    -fx-text-fill: white;
+  -fx-font-size: 40px;
+  -fx-font-family: "Pixelify Sans SemiBold";
+  -fx-text-fill: white;
 }
 
 .subtitle {
-    -fx-font-size: 16px;
-    -fx-text-fill: #aaa;
+  -fx-font-size: 20px;
+  -fx-font-family: "Pixelify Sans Regular";
+  -fx-text-fill: #ffffff;
 }
 
 .stat-value {
-    -fx-font-size: 24px;
-    -fx-font-family: "Pixelify Sans Bold";
-    -fx-text-fill: white;
+	-fx-font-size: 18px;
+  -fx-font-family: "Fira Code Regular";
+  -fx-text-fill: white;
 }
 
-.fact-text {
-    -fx-font-size: 14px;
-    -fx-text-fill: white;
-}
+/* .fact-text { */
+/*   -fx-font-size: 14px; */
+/*   -fx-text-fill: white; */
+/* } */
 
 .glass-card {
-    -fx-background-color: rgba(255, 255, 255, 0.08);
-    -fx-background-radius: 40px;
-    -fx-border-color: rgba(255, 255, 255, 0.1);
-    -fx-border-radius: 40px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 30, 0, 0, 10);
+  -fx-background-color: rgba(255, 255, 255, 0.08);
+  -fx-background-radius: 40px;
+  -fx-border-color: rgba(255, 255, 255, 0.1);
+  -fx-border-radius: 40px;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 30, 0, 0, 10);
+	-fx-padding: 30px; 
 }
 
+.glass-card-aboutus {
+	-fx-background-color: rgba(255, 255, 255, 0.08); 
+  -fx-border-color: rgba(255, 255, 255, 0.1);
+	-fx-background-radius: 40px; 
+  -fx-border-radius: 40px;
+	-fx-padding: 77px; 
+	-fx-max-width: 800px; 
+	-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 30, 0, 0, 10);
+	-fx-min-width: 800px; 
+	-fx-min-height: 200px;
+}
+
+
 .circle-btn {
-    -fx-background-color: #cccccc;
-    -fx-background-radius: 50px;
-    -fx-min-width: 45px;
-    -fx-min-height: 45px;
-    -fx-max-width: 45px;
-    -fx-max-height: 45px;
-    -fx-text-fill: black;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-    -fx-font-family: "Pixelify Sans Regular";
-    -fx-font-size: 20px;
+  -fx-background-color: #cccccc;
+  -fx-background-radius: 50px;
+  -fx-min-width: 45px;
+  -fx-min-height: 45px;
+  -fx-max-width: 45px;
+  -fx-max-height: 45px;
+  -fx-text-fill: black;
+  -fx-font-weight: bold;
+  -fx-cursor: hand;
+  -fx-font-family: "Pixelify Sans Regular";
+  -fx-font-size: 18px;
+	-fx-padding: 0;
 }
 
 .circle-btn:hover {
-    -fx-background-color: white;
+  -fx-background-color: white;
 }
 
 .pill-btn {
-    -fx-background-color: #cccccc;
-    -fx-background-radius: 25px;
-    -fx-padding: 10 30 10 30;
-    -fx-text-fill: black;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-    -fx-font-family: "Pixelify Sans Regular";
-    -fx-font-size: 14px;
+  -fx-background-color: #cccccc;
+  -fx-background-radius: 25px;
+  -fx-padding: 10 30 10 30;
+  -fx-text-fill: black;
+  -fx-font-weight: bold;
+  -fx-cursor: hand;
+  -fx-font-family: "Pixelify Sans Regular";
+  -fx-font-size: 14px;
 }
 
 .pill-btn:hover {
-    -fx-background-color: white;
+  -fx-background-color: white;
 }
+
+.custom-chart .chart-plot-background{
+	-fx-background-color: transparent;
+}
+
+.custom-chart .axis{
+	-fx-tick-label-fill: white;
+	-fx-font-family: Pixelify Sans Regular;
+	-fx-font-size: 12px;
+}
+
+.custom-chart .axis-label{
+	-fx-text-fill: white;
+}
+
+.custom-chart .chart-bar{
+	-fx-bar-fill: white;
+	-fx-background-radius: 5 5 0 0;
+}
+
+.custom-chart .chart-content{
+	-fx-padding: 10px;
+}
+
+.scroll-pane{
+	-fx-background-color: transparent;
+	-fx-border-color: transparent;
+}
+
+.scroll-pane .viewport{
+	-fx-background-color: transparent;
+}
+
+/* custom scrollbar styling */
+.scroll-bar:vertical{
+	-fx-background-color: transparent;
+	-fx-width: 8px;
+}
+
+.scroll-bar:vertical .thumb{
+	-fx-background-color: rgba(225, 225, 225, 0.2);
+	-fx-background-radius: 10px;
+}
+
+.scroll-bar:vertical .thumb:hover{
+	-fx-background-color: rgba(225, 225, 225, 0.4);
+}
+
+.scroll-bar:vertical .track,
+.scroll-bar:vertical .decrement-button,
+.scroll-bar:vertical .increment-button{
+	-fx-background-color: transparent;
+	-fx-border-color: transparent;
+}
+
+.homepage-content{
+	-fx-text-fill: rgba(255,255,255,1); 
+	-fx-font-size: 20px; 
+	-fx-font-family: 'Fira Code Regular';
+}
+
+
+.text-content{
+	-fx-text-fill: rgba(255,255,255,1); 
+	-fx-font-size: 14px; 
+	-fx-font-family: 'Fira Code Regular';
+}
+
+/* combo box styling */
+.combo-box{
+	-fx-background-color: rgba(225, 225, 225, 0.08);
+	-fx-background-radius: 25px;
+	-fx-border-color: rgba(225,225,225,0.2);
+	-fx-border-radius: 25px;
+	-fx-padding: 5 15 5 15;
+	-fx-cursor: hand;
+}
+
+.combo-hover{
+	-fx-background-color: rgba(225, 225, 225, 0.15);
+	-fx-border-color: rgba(225, 225, 225, 0.4);
+}
+
+.combo-box .cell{
+	-fx-text-fill: #ffffff;
+	-fx-font-family: "Pixelify Sans Regular";
+	-fx-font-size: 14px;
+}
+
+.combo-box .list-view{
+	-fx-background-color: #1a1a1a;
+	-fx-background-radius: 15px;
+	-fx-border-color: rgba(225, 225, 225, 0.1);
+	-fx-border-radius: 15px;
+	-fx-padding: 5px;
+}
+
+.combo-box .list-cell{
+	-fx-background-color: transparent;
+	-fx-text-fill: #ffffff;
+	-fx-padding: 10px;
+	-fx-font-family: "Pixelify Sans Regular";
+}
+
+.combo-box .list-cell:hover{
+	-fx-backrgound-color: rgba(225, 225, 225, 0.1);
+	-fx-background-radius: 10px;
+}
+
+.combo-box .arrow-button{
+	-fx-background-color: transparent;
+	-fx-padding: 0 0 0 10;
+}
+
+.combo-box .arrow{
+	-fx-background-color: #ffffff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

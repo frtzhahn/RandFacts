@@ -11,7 +11,9 @@ import javafx.scene.text.Font;
 public class MainApp extends Application{
 	@Override
 	public void start(Stage stage) throws Exception{
+		Font.loadFont(getClass().getResourceAsStream("/com/randfacts/fonts/PixelifySans-SemiBold.ttf"), 20);
 		Font.loadFont(getClass().getResourceAsStream("/com/randfacts/fonts/PixelifySans-Regular.ttf"), 20);
+		Font.loadFont(getClass().getResourceAsStream("/com/randfacts/fonts/FiraCode-Regular.ttf"), 20);
 		
 		//Loading the Navigation Shell
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/randfacts/MainView.fxml"));

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+	alignment="CENTER"
+	spacing="30.0"
+	style="-fx-background-color: transparent;">
+
+<!-- header title -->
+<Label text="DASHBOARD" styleClass="title" />
+
+<!-- bar graph container -->
+<StackPane prefHeight="600.0" prefWidth="1100.0" maxWidth="1100.0" styleClass="glass-card">
+			<VBox alignment="TOP_CENTER" spacing="20.0" style="-fx-padding: 30;">
+
+				<Label text="FREQUENT CATEGORY SEARCHES" styleClass="subtitle"
+					style="-fx-font-size: 14px; -fx-text-fill: rgba(255,255,255,0.6); -fx-letter-spacing: 2px;" />
+
+				<Region prefHeight="1" style="-fx-background-color: rgba(225,225,225,0.1); -fx-max-width: 990;" />
+
+				<BarChart fx:id="categoryChart" legendVisible="false"
+					verticalGridLinesVisible="false" horizontalGridLinesVisible="false"
+					animated="true" styleClass="custom-chart">
+
+				<xAxis>
+					<CategoryAxis side="BOTTOM" tickLabelFill="WHITE" />
+				</xAxis>
+
+				<yAxis>
+					<NumberAxis side="LEFT" tickLabelFill="WHITE" upperBound="100" tickUnit="25" autoRanging="false" />
+				</yAxis>
+
+			</BarChart>
+		</VBox>
+	</StackPane>
+</VBox>
+
+	
+
+
+
+
+
+
+
+
+
+
+
