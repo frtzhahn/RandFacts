@@ -17,7 +17,7 @@
 	styleClass="title" />
 
 <!-- container -->
-	<StackPane prefHeight="600.0" prefWidth="1100.0" maxWidth="1100.0" styleClass="glass-card">
+	<StackPane prefHeight="650.0" prefWidth="900.0" maxWidth="1100.0" styleClass="glass-card">
 	<VBox alignment="TOP_CENTER" spacing="20.0" style="-fx-padding: 30;">
 
 		<!-- column headers on container -->

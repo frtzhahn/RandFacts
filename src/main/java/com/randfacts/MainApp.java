@@ -14,6 +14,7 @@ public class MainApp extends Application{
 		Font.loadFont(getClass().getResourceAsStream("/com/randfacts/fonts/PixelifySans-SemiBold.ttf"), 20);
 		Font.loadFont(getClass().getResourceAsStream("/com/randfacts/fonts/PixelifySans-Regular.ttf"), 20);
 		Font.loadFont(getClass().getResourceAsStream("/com/randfacts/fonts/FiraCode-Regular.ttf"), 20);
+		Font.loadFont(getClass().getResourceAsStream("/com/randfacts/fonts/FiraCode-Bold.ttf"), 20);
 		
 		//Loading the Navigation Shell
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/randfacts/MainView.fxml"));

@@ -25,15 +25,18 @@
 	<!-- 	<Button fx:id="generateButton" text="	GENERATE" styleClass="pill-btn" onAction="#handleGenerate" /> -->
 	<!-- </HBox> -->
 
-	<StackPane prefHeight="600.0"
+	<StackPane prefHeight="650.0"
 		prefWidth="900.0"
 		maxWidth="1100.0"
 		styleClass="glass-card">
 
 		<VBox spacing="20.0" style="-fx-padding: 30;">
 			<Label fx:id="titleLabel" 
-				text="lorem ipsum"
-				styleClass="subtitle" wrapText="true" />
+				text="LOREM IPSUM"
+				styleClass="homepage-subtitle"
+				alignment="CENTER"
+				maxWidth="Infinity"
+				wrapText="true" />
 
 			<Region prefHeight="1" style="-fx-background-color: rgba(225,225,225,0.15);" />
 
@@ -44,9 +47,10 @@
 				prefHeight="400.0">
 
 			<Label fx:id="factLabel"	
-				text="daily dose of random ahh"
+				text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ultricies, erat vel malesuada ornare, eros magna lacinia nisi, vitae semper ex odio in lorem. Suspendisse scelerisque blandit lectus a viverra. Praesent blandit ullamcorper tellus, eget ultricies risus tincidunt in. Mauris viverra pellentesque odio quis malesuada. Quisque in posuere eros. Ut efficitur nisi tincidunt ligula dignissim, eget vulputate justo molestie. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam tempor gravida nisi, vel dapibus est consequat non. In hac habitasse platea dictumst. Mauris tempor, ex at laoreet aliquam, sem mauris dignissim arcu, eget aliquam libero orci ut elit. Sed vehicula auctor mauris pretium molestie. Nam luctus nisl scelerisque tortor lobortis, in tempor justo tempor. Morbi ut leo molestie, consequat metus ac, interdum massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ultricies, erat vel malesuada ornare, eros magna lacinia nisi, vitae semper ex odio in lorem. Suspendisse scelerisque blandit lectus a viverra. Praesent blandit ullamcorper tellus, eget ultricies risus tincidunt in. Mauris viverra pellentesque odio quis malesuada. Quisque in posuere eros. Ut efficitur nisi tincidunt ligula dignissim, eget vulputate justo molestie. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam tempor gravida nisi, vel dapibus est consequat non. In hac habitasse platea dictumst. Mauris tempor, ex at laoreet aliquam, sem mauris dignissim arcu, eget aliquam libero orci ut elit. Sed vehicula auctor mauris pretium molestie. Nam luctus nisl scelerisque tortor lobortis, in tempor justo tempor. Morbi ut leo molestie, consequat metus ac, interdum massa.  "
 				styleClass="homepage-content"
-				wrapText="true" />
+				wrapText="true"
+				alignment="TOP_LEFT" />
 
 	</ScrollPane>
 </VBox>
@@ -67,7 +71,7 @@
 
 				<Button fx:id="generateButton" 
 					text="GENERATE" 
-					styleClass="pill-btn" 
+					styleClass="pill-btn"
 					onAction="#handleGenerate" />
 
 				<ComboBox fx:id="categoryComboBox" 

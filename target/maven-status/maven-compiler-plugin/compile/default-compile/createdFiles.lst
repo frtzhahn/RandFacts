@@ -1,3 +1,5 @@
 com/randfacts/MainApp.class
 module-info.class
+com/randfacts/SavedFactsController.class
 com/randfacts/MainController.class
+com/randfacts/Fact.class

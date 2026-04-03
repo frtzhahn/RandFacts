@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Region?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+	fx:controller="com.randfacts.ExtendedSavedFactsPageController">
+
+	<!-- main page content -->
+	<VBox alignment="CENTER"
+		spacing="30.0"
+		style="-fx-background-color: transparent;">
+
+		<!-- header -->
+		<Label text="VIEWING DETAILS"
+			styleClass="title" />
+
+		<StackPane prefHeight="650.0" 
+			prefWidth="900.0" 
+			maxWidth="1100.0" 
+			styleClass="glass-card-extended-pages">
+
+			<!-- content section -->
+			<VBox spacing="20.0" style="-fx-padding: 30;">
+				<HBox alignment="CENTER_LEFT">
+					<Label fx:id="titleLabel" text="Fact Title" styleClass="subtitle" />
+					<Region HBox.hgrow="ALWAYS" />
+					<Label fx:id="dataLabel" 
+						text="2026-04-03" 
+						style="-fx-text-fill: rgba(225, 225, 225, 0.5);" />
+				</HBox>
+
+				<!-- line separator -->
+				<Region prefHeight="1" style="-fx-background-color: rgba(225, 225, 225, 0.15);" />
+
+				<!-- editable area for the extended page -->
+				<TextArea fx:id="contentTextArea"
+					wrapText="true"
+					prefHeight="400.0"
+					styleClass="transparent-textarea"
+					style="-fx-background-color: transparent; 
+					-fx-control-inner-background: transparent; 
+					-fx-text-fill: white;
+					-fx-font-size: 18px;
+					-fx-background-insets: 0;
+					-fx-padding: 10;" />
+
+			</VBox>
+
+			<!-- controls -->
+			<AnchorPane pickOnBounds="false">
+				<Button fx:id="exitButton"
+					text="X"
+					styleClass="circle-btn"
+					AnchorPane.bottomAnchor="20.0"
+					AnchorPane.leftAnchor="20.0"
+					onAction="#handleExit" />
+
+				<Button fx:id="saveButton"
+					text="✔"
+					styleClass="circle-btn"
+					AnchorPane.bottomAnchor="20.0"
+					AnchorPane.rightAnchor="20.0"
+					onAction="#handleSave" />
+
+				</AnchorPane>
+			</StackPane>
+	</VBox>
+
+	<!-- full screen blur overlay for unsaved changes -->
+	<VBox fx:id="exitAuthOverlay" 
+		visible="false" 
+		alignment="CENTER" 
+		spacing="30.0" 
+		style="-fx-background-color: rgba(0, 0, 0, 0.7); -fx-background-radius: 40px;">
+		
+		<Label text="unsaved changes" styleClass="title" />
+		<Label text="are you sure you want to exit the page?" styleClass="subtitle" />
+		
+		<HBox alignment="CENTER" spacing="20.0">
+			<Button text="yes" styleClass="pill-btn" onAction="#confirmExit" />
+			<Button text="no" styleClass="pill-btn" onAction="#cancelExit" />
+		</HBox>
+	</VBox>
+
+</StackPane>

@@ -21,52 +21,107 @@ public class MainController{
 	private double xOffset = 0;
 	private double yOffset = 0;
 
+	// tracks previous page for back-navigation logic
+	private String previousPagePath = "";
+
 	@FXML
 	public void initialize(){
-		// terminal success project build message
+		// terminal status for startup check
 		System.out.println("\u001b[32mRandFacts Project: maven build success on your machine\u001b[0m");
-		// Reference: RandFacts/src/main/resources/com/randfacts/Homepage.fxml
-		loadPage("Homepage");
-		setActiveNavItem(navHomepage);
+		
+		// load landing page by default
+		loadPage("Homepage", navHomepage);
 	}
 
 	@FXML
-	private void goToHomepage() { 
-		loadPage("Homepage"); 
-		setActiveNavItem(navHomepage);
+	public void goToHomepage() { 
+		loadPage("Homepage", navHomepage);
 	}
 
 	@FXML
-	private void goToSavedFacts() { 
-		loadPage("SavedFacts"); 
-		setActiveNavItem(navSavedFacts);
+	public void goToSavedFacts() { 
+		loadPage("SavedFacts", navSavedFacts);
 	}
 
 	@FXML
-	private void goToHistory() { 
-		loadPage("History"); 
-		setActiveNavItem(navHistory);
+	public void goToHistory() { 
+		loadPage("History", navHistory);
 	}
 
 	@FXML
-	private void goToDashboard() { 
-		loadPage("Dashboard"); 
-		setActiveNavItem(navDashboard);
+	public void goToDashboard() { 
+		loadPage("Dashboard", navDashboard);
 	}
 
 	@FXML
-	private void goToAboutUs() { 
-		loadPage("AboutUs"); 
-		setActiveNavItem(navAboutUs);
+	public void goToAboutUs() { 
+		loadPage("AboutUs", navAboutUs);
+	}
+
+	/**
+	 * handles fragment swapping and navigation highlighting
+	 * keeps highlighting active even if child fragments are loaded
+	 */
+	public void loadPage(String page, Label activeNav) {
+		try {
+			// determine path based on standard naming convention
+			String fxmlPath = page.equals("Homepage") ? "Homepage.fxml" : page + "Page.fxml";
+			
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+			Parent root = loader.load();
+
+			// commit fragment swap and update history
+			contentArea.getChildren().setAll(root);
+			previousPagePath = fxmlPath;
+			
+			// provide main controller reference to the fragment controller
+			Object controller = loader.getController();
+			if (controller instanceof SavedFactsController) {
+				((SavedFactsController) controller).setMainController(this);
+			}
+
+			if (activeNav != null) {
+				setActiveNavItem(activeNav);
+			}
+
+			System.out.println("navigation engine: loaded " + fxmlPath);
+		} catch (IOException e) {
+			System.err.println("engine error: failed to load " + page);
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * specialized loader for extended detail views with data passing
+	 */
+	public void loadExtendedPageWithData(String page, Fact fact) {
+		try {
+			String fxmlPath = page + ".fxml";
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+			Parent root = loader.load();
+
+			contentArea.getChildren().setAll(root);
+			
+			// data handoff to the extended view controller
+			ExtendedSavedFactsPageController controller = loader.getController();
+			controller.setMainController(this);
+			controller.setFactData(fact.getTitle(), fact.getDate(), fact.getContent());
+
+			// maintain highlighting for the respective section
+			setActiveNavItem(navSavedFacts);
+
+			System.out.println("navigation engine: detailed view active -> " + fact.getTitle());
+		} catch (IOException e) {
+			System.err.println("engine error: detailed load failure -> " + page);
+			e.printStackTrace();
+		}
 	}
 
 	private void setActiveNavItem(Label activeLabel) {
-		// Reset all labels to default state
 		Label[] navLabels = {navHomepage, navSavedFacts, navHistory, navDashboard, navAboutUs};
 		for (Label label : navLabels) {
 			label.getStyleClass().remove("active");
 		}
-		// Apply active class to the clicked label
 		if (!activeLabel.getStyleClass().contains("active")) {
 			activeLabel.getStyleClass().add("active");
 		}
@@ -102,22 +157,4 @@ public class MainController{
 		stage.setX(event.getScreenX() - xOffset);
 		stage.setY(event.getScreenY() - yOffset);
 	}
-
-	private void loadPage(String page){
-		try{
-			String fxmlPath = page.equals("Homepage") ? "Homepage.fxml" : page + "Page.fxml";
-
-			Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-
-			contentArea.getChildren().setAll(root);
-			System.out.println("Navigation Engine: Successfully loaded " + fxmlPath);
-		}
-
-		catch(IOException e){
-			System.err.println("Error: Could not load the page " + page);
-			e.printStackTrace();
-		}
-
-
-	}
-} 
+}
