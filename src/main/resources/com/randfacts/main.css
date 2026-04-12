@@ -10,6 +10,22 @@
   src: url("fonts/PixelifySans-Bold.ttf");
 }
 
+@font-face {
+  font-family: "Pixelify Sans SemiBold";
+  src: url("fonts/PixelifySans-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: "Fira Code Bold";
+  src: url("fonts/FiraCode-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Fira Code Regular";
+  src: url("fonts/FiraCode-Regular.ttf");
+}
+
+
 .root {
   -fx-font-family: "Pixelify Sans Regular";
 }
@@ -51,7 +67,7 @@
 
 .subtitle {
   -fx-font-size: 20px;
-  -fx-font-family: "Pixelify Sans Regular";
+  -fx-font-family: "Fira Code Bold";
   -fx-text-fill: #ffffff;
 }
 
@@ -118,13 +134,12 @@
 }
 
 .pill-btn {
+  -fx-font-family: "Pixelify Sans SemiBold";
   -fx-background-color: #cccccc;
   -fx-background-radius: 25px;
   -fx-padding: 10 30 10 30;
   -fx-text-fill: black;
-  -fx-font-weight: bold;
   -fx-cursor: hand;
-  -fx-font-family: "Pixelify Sans Regular";
   -fx-font-size: 14px;
 }
 
@@ -138,7 +153,7 @@
 
 .custom-chart .axis{
 	-fx-tick-label-fill: white;
-	-fx-font-family: Pixelify Sans Regular;
+	-fx-font-family: "Pixelify Sans Regular";
 	-fx-font-size: 12px;
 }
 
@@ -249,7 +264,12 @@
 	-fx-background-color: #ffffff;
 }
 
-
+/* style for unsaved pop up window */
+.unsaved-popup{
+  -fx-font-family: "Pixelify Sans Regular"; 
+	-fx-max-width: 500px;
+	-fx-max-height: 260px;
+}
 
 
 

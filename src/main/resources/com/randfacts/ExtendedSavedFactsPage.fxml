@@ -76,6 +76,7 @@
 
 	<!-- full screen blur overlay for unsaved changes -->
 	<VBox fx:id="exitAuthOverlay" 
+		styleClass="unsaved-popup"
 		visible="false" 
 		alignment="CENTER" 
 		spacing="30.0" 
@@ -85,8 +86,8 @@
 		<Label text="are you sure you want to exit the page?" styleClass="subtitle" />
 		
 		<HBox alignment="CENTER" spacing="20.0">
-			<Button text="yes" styleClass="pill-btn" onAction="#confirmExit" />
-			<Button text="no" styleClass="pill-btn" onAction="#cancelExit" />
+			<Button text="YES" styleClass="pill-btn" onAction="#confirmExit" />
+			<Button text="NO" styleClass="pill-btn" onAction="#cancelExit" />
 		</HBox>
 	</VBox>
 
