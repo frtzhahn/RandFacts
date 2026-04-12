@@ -83,7 +83,7 @@
 		style="-fx-background-color: rgba(0, 0, 0, 0.7); -fx-background-radius: 40px;">
 		
 		<Label text="unsaved changes" styleClass="title" />
-		<Label text="are you sure you want to exit the page?" styleClass="subtitle" />
+		<Label text="are you sure you want to exit the page?" styleClass="description" />
 		
 		<HBox alignment="CENTER" spacing="20.0">
 			<Button text="YES" styleClass="pill-btn" onAction="#confirmExit" />
