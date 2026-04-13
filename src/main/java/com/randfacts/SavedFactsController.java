@@ -72,7 +72,7 @@ public class SavedFactsController {
         // implementation of click logic for cell transition
         cell.setOnMouseClicked(event -> {
             if (mainController != null) {
-                mainController.loadExtendedPageWithData("ExtendedSavedFactsPage", fact);
+                mainController.loadExtendedPageWithData("ExtendedSavedFactsPage", fact,  mainController.getNavSavedFacts());
             }
         });
 
@@ -80,9 +80,7 @@ public class SavedFactsController {
         return cell;
     }
 
-    /**
-     * reference setter to allow main controller navigation calls
-     */
+    //reference setter to allow main controller navigation calls
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }

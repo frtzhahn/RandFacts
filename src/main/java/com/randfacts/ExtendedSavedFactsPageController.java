@@ -5,7 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 
-public class ExtendedSavedFactsPageController {
+public class ExtendedSavedFactsPageController implements FactDetailController {
 
     @FXML private Label titleLabel;
     @FXML private Label dataLabel;

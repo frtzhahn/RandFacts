@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Region?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+		fx:controller="com.randfacts.ExtendedHistoryPageController">
+
+		<VBox alignment="CENTER" spacing="30.0" style="-fx-background-color: transparent;">
+				<Label text="HISTORY DETAIL" styleClass="title" />
+
+				<StackPane  prefHeight="650.0" prefWidth="900.0" maxWidth="1100.0" styleClass="glass-card-extended-pages">
+						<VBox spacing="20.0" style="-fx-padding: 30;">
+								<HBox alignment="CENTER_LEFT">
+									<Label fx:id="titleLabel" text="Fact Title" styleClass="subtitle" />
+									<Region HBox.hgrow="ALWAYS" />
+									<Label fx:id="dataLabel" text="Date Placeholder" style="-fx-text-fill: rgba(225,225,225,0.5);" />
+								</HBox>
+
+								<Region prefHeight="1" style="-fx-background-color: rgba(225,225,225,0.15);" />
+
+								<TextArea fx:id="contentTextArea" editable="false" wrapText="true" prefHeight="400.0" styleClass="transparent-textarea"
+										style="-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-text-fill: white; -fx-font-size: 18px;" />
+							</VBox>
+
+							<AnchorPane pickOnBounds="false">
+								<Button text="X" styleClass="circle-btn" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" onAction="#handleExit" />
+						</AnchorPane>
+				</StackPane>
+		</VBox>
+</StackPane>
+
+
+
+
+
+
+
+
+

@@ -44,13 +44,7 @@
 				<TextArea fx:id="contentTextArea"
 					wrapText="true"
 					prefHeight="400.0"
-					styleClass="transparent-textarea"
-					style="-fx-background-color: transparent; 
-					-fx-control-inner-background: transparent; 
-					-fx-text-fill: white;
-					-fx-font-size: 18px;
-					-fx-background-insets: 0;
-					-fx-padding: 10;" />
+					styleClass="editable-texts" />
 
 			</VBox>
 

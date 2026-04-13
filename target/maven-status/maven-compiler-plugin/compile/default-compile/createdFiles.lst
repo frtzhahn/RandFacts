@@ -4,4 +4,7 @@ module-info.class
 com/randfacts/SavedFactsController.class
 com/randfacts/MainController.class
 com/randfacts/Fact.class
+com/randfacts/ExtendedHistoryPageController.class
 com/randfacts/ExtendedSavedFactsPageController.class
+com/randfacts/HistoryController.class
+com/randfacts/FactDetailController.class

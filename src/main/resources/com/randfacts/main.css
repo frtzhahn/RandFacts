@@ -279,7 +279,16 @@
 	-fx-max-height: 260px;
 }
 
-
+/* style for the editable texts */
+.editable-texts{
+	-fx-background-color: transparent; 
+	-fx-control-inner-background: transparent; 
+	-fx-text-fill: white;
+	-fx-font-size: 18px;
+	-fx-background-insets: 0;
+	-fx-padding: 10;
+	-fx-font-family: "Fira Code Regular";
+}
 
 
 

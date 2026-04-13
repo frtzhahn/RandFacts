@@ -79,6 +79,9 @@ public class MainController{
 			if (controller instanceof SavedFactsController) {
 				((SavedFactsController) controller).setMainController(this);
 			}
+			else if(controller instanceof HistoryController){
+					((HistoryController) controller).setMainController(this);
+			}
 
 			if (activeNav != null) {
 				setActiveNavItem(activeNav);
@@ -91,31 +94,32 @@ public class MainController{
 		}
 	}
 
-	/**
-	 * specialized loader for extended detail views with data passing
-	 */
-	public void loadExtendedPageWithData(String page, Fact fact) {
-		try {
-			String fxmlPath = page + ".fxml";
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-			Parent root = loader.load();
+	//specialized loader for extended detail views with data passing
+ public void loadExtendedPageWithData(String fxmlName, Fact fact, Label navToHighlight) {
+     try {
+         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlName + ".fxml"));
+         Parent root = loader.load();
 
-			contentArea.getChildren().setAll(root);
-			
-			// data handoff to the extended view controller
-			ExtendedSavedFactsPageController controller = loader.getController();
-			controller.setMainController(this);
-			controller.setFactData(fact.getTitle(), fact.getDate(), fact.getContent());
+         contentArea.getChildren().setAll(root);
 
-			// maintain highlighting for the respective section
-			setActiveNavItem(navSavedFacts);
+         Object controller = loader.getController();
+         if (controller instanceof FactDetailController) {
+             FactDetailController detailController = (FactDetailController) controller;
+             detailController.setMainController(this);
+             detailController.setFactData(fact.getTitle(), fact.getDate(), fact.getContent());
+         }
 
-			System.out.println("navigation engine: detailed view active -> " + fact.getTitle());
-		} catch (IOException e) {
-			System.err.println("engine error: detailed load failure -> " + page);
-			e.printStackTrace();
-		}
-	}
+         //dynamic highlighting on nav bars
+         if (navToHighlight != null) {
+             setActiveNavItem(navToHighlight);
+         }
+
+         System.out.println("navigation engine: unified load active -> " + fact.getTitle());
+     } catch (IOException e) {
+         System.err.println("engine error: unified load failure -> " + fxmlName);
+         e.printStackTrace();
+     }
+ }
 
 	private void setActiveNavItem(Label activeLabel) {
 		Label[] navLabels = {navHomepage, navSavedFacts, navHistory, navDashboard, navAboutUs};
@@ -156,5 +160,15 @@ public class MainController{
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		stage.setX(event.getScreenX() - xOffset);
 		stage.setY(event.getScreenY() - yOffset);
+	}
+
+	// getter for history controller to access
+	public Label getNavHistory(){
+			return navHistory;
+	}
+
+	//getter for savedfacts page to access
+	public Label getNavSavedFacts(){
+			return navSavedFacts;
 	}
 }
