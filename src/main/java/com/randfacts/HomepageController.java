@@ -22,13 +22,13 @@ public class HomepageController{
 	private Label factLabel;
 
 	@FXML
+	private Label titleLabel;
+
+	@FXML
 	public void initialize(){
 		ObservableList<String> categories=FXCollections.observableArrayList(
 				"Programming", "History", "Science", "Physics", "Mathematics", "Politics", "Finance", "Philosophy", "Astronomy", "General");
 		categoryComboBox.setItems(categories);
-
-		// debug message
-		System.out.println("Homepage Engine: Fragment initialize categories loaded");
 
 	}
 
@@ -41,14 +41,20 @@ public class HomepageController{
 			return;
 		}
 
-		factLabel.setText("you selected " + selectedCategory + "! The AI engine is ready to fire.");
-		System.out.println("Generate Trigger: Category [" +  selectedCategory +"] selected");
+		// fact service connection
+		Fact newFact = FactService.getInstance().generateFact(selectedCategory);
+
+		// updating UIcomponents using data from fact object
+		titleLabel.setText(newFact.getTitle());
+		factLabel.setText(newFact.getContent());
+
+		System.out.println("Homepage: generated: " + newFact.getTitle());
 
 	}
 
 	@FXML
 	private void handleSave(){
-		System.out.println("Save Trigger: Engine ready to log facts");
+		System.out.println("Saved Facts: ready to log facts");
 	}
 
 
