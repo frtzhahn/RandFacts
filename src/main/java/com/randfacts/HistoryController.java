@@ -16,12 +16,9 @@ public class HistoryController{
 
 		@FXML
 		public void initialize(){
-			java.util.List<Fact> mockHistory = java.util.Arrays.asList(
-					new Fact("History Fact 1", "mock data test for history page", "2026-04-10"),
-					new Fact("History Fact 1", "mock data test for history page", "2026-04-10")
-					);                                                          
 
-			loadHistoryItems(mockHistory);
+			//removed hardcoded mock data for testing
+			loadHistoryItems(FactService.getInstance().getHistory());
 
 		}
 
