@@ -106,7 +106,7 @@ public class MainController{
          if (controller instanceof FactDetailController) {
              FactDetailController detailController = (FactDetailController) controller;
              detailController.setMainController(this);
-             detailController.setFactData(fact.getTitle(), fact.getDate(), fact.getContent());
+             detailController.setFactData(fact);
          }
 
          //dynamic highlighting on nav bars

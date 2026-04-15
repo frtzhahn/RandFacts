@@ -24,6 +24,8 @@ public class HomepageController{
 	@FXML
 	private Label titleLabel;
 
+	private Fact currentFact;
+
 	@FXML
 	public void initialize(){
 		ObservableList<String> categories=FXCollections.observableArrayList(
@@ -41,20 +43,24 @@ public class HomepageController{
 			return;
 		}
 
-		// fact service connection
-		Fact newFact = FactService.getInstance().generateFact(selectedCategory);
+		// fact service call to store current fact
+		this.currentFact = FactService.getInstance().generateFact(selectedCategory);
 
 		// updating UIcomponents using data from fact object
-		titleLabel.setText(newFact.getTitle());
-		factLabel.setText(newFact.getContent());
+		titleLabel.setText(currentFact.getTitle());
+		factLabel.setText(currentFact.getContent());
 
-		System.out.println("Homepage: generated: " + newFact.getTitle());
+		// terminal message to verify success
+		System.out.println("Homepage: generated: " + currentFact.getTitle());
 
 	}
 
 	@FXML
 	private void handleSave(){
-		System.out.println("Saved Facts: ready to log facts");
+			if(currentFact != null){
+					FactService.getInstance().saveFact(currentFact);
+					System.out.println("HomePage: fact saved");
+			}
 	}
 
 

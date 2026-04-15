@@ -22,22 +22,17 @@ public class SavedFactsController {
 
     @FXML
     public void initialize() {
-        // population of mock data for testing clicks
-        savedFacts.add(new Fact("the origin of coffee", "coffee was discovered by a goat herder in ethiopia after he noticed his goats became energetic.", "2026-04-01 10:30:00"));
-        savedFacts.add(new Fact("honey never spoils", "archaeologists have found pots of honey in ancient egyptian tombs that are over 3,000 years old.", "2026-04-02 14:15:00"));
-        savedFacts.add(new Fact("octopus hearts", "an octopus has three hearts and blue blood.", "2026-04-03 09:45:00"));
 
-        populateSavedFacts();
+        populateSavedFacts(FactService.getInstance().getSavedFacts());
+
     }
 
-    /**
-     * dynamically generates cell rows from the mock data list
-     * adds click listeners to transition into the extended view
-     */
-    private void populateSavedFacts() {
+    // dynamically generates cell rows from the mock data list
+    // adds click listeners to transition into the extended view
+    private void populateSavedFacts(List<Fact> facts) {
         historyContainer.getChildren().clear();
 
-        for (Fact fact : savedFacts) {
+        for (Fact fact : facts) {
             HBox cell = createFactCell(fact);
             historyContainer.getChildren().add(cell);
         }

@@ -25,7 +25,7 @@ public class FactService{
 
 		public Fact generateFact(String category){
 				String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-				String content = "Researching " + category + "...(mock logic)";
+				String content = "mock test " + category + " random shit";
 
 				Fact newFact = new Fact(category + " fact", content, date);
 
@@ -38,5 +38,19 @@ public class FactService{
 				return history;
 		}
 
+		public void saveFact(Fact fact){
+				if(!savedFacts.contains(fact)){
+						savedFacts.add(0, fact);
+				}
+		}
+
+		public List<Fact> getSavedFacts(){
+				return savedFacts;
+		}
+
+	 	public void updateSavedFact(Fact originalFact, String newContent) {
+		 		originalFact.setContent(newContent);
+			 	System.out.println("Service: data model synchronized with UI edits.");
+	 	}
 
 }

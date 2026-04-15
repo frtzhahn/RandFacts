@@ -7,13 +7,21 @@ import javafx.scene.layout.VBox;
 
 public class ExtendedSavedFactsPageController implements FactDetailController {
 
-    @FXML private Label titleLabel;
-    @FXML private Label dataLabel;
-    @FXML private TextArea contentTextArea;
-    @FXML private VBox exitAuthOverlay;
+    @FXML 
+		private Label titleLabel;
+
+    @FXML 
+		private Label dataLabel;
+
+    @FXML 
+		private TextArea contentTextArea;
+
+    @FXML 
+		private VBox exitAuthOverlay;
 
     private MainController mainController;
     private boolean isModified = false;
+		private Fact currentFact;
 
     @FXML
     public void initialize() {
@@ -23,14 +31,14 @@ public class ExtendedSavedFactsPageController implements FactDetailController {
         });
     }
 
-    /**
-     * populates UI elements with the provided fact data
-     * ensures the modification flag is reset after population
-     */
-    public void setFactData(String title, String date, String content) {
-        titleLabel.setText(title);
-        dataLabel.setText(date);
-        contentTextArea.setText(content);
+    
+    // populates UI elements with the provided fact data
+    // ensures the modification flag is reset after population
+    public void setFactData(Fact fact) {
+				this.currentFact = fact;
+        titleLabel.setText(fact.getTitle());
+        dataLabel.setText(fact.getDate());
+        contentTextArea.setText(fact.getContent());
         isModified = false;
     }
 
@@ -39,10 +47,14 @@ public class ExtendedSavedFactsPageController implements FactDetailController {
     }
 
     @FXML
-    private void handleSave() {
-        // commit changes to data storage here
-        System.out.println("status: changes saved successfully");
-        isModified = false;
+    private void handleSave(){
+        // synchronize with service
+				if(currentFact != null && isModified){
+						FactService.getInstance().updateSavedFact(currentFact, contentTextArea.getText());
+						isModified = false;
+						System.out.println("status: changes saved successfully");
+
+				}
     }
 
     @FXML

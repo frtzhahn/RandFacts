@@ -12,10 +12,10 @@ public class ExtendedHistoryPageController implements FactDetailController{
 		private MainController mainController;
 
 		@Override
-		public void setFactData(String title, String date, String content){
-				titleLabel.setText(title);
-				dataLabel.setText(date);
-				contentTextArea.setText(content);
+		public void setFactData(Fact fact){
+				titleLabel.setText(fact.getTitle());
+				dataLabel.setText(fact.getDate());
+				contentTextArea.setText(fact.getContent());
 		}
 
 		@Override
