@@ -3,6 +3,10 @@ module com.randfacts{
 	requires javafx.controls;
 	requires javafx.fxml;
 
+	requires java.net.http;
+	requires io.github.cdimascio.dotenv.java;
+	requires com.google.gson;
+
 	//gives permission to the library to get in the source code directory com.mocha
 	opens com.randfacts to javafx.fxml;
 

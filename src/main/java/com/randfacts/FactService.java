@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+// import io.github.cdimascio.dotenv.Dotenv;
 
 public class FactService{
 		private static FactService instance;
@@ -25,12 +26,38 @@ public class FactService{
 
 		public Fact generateFact(String category){
 				String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-				String content = "mock test " + category + " random shit";
+				String title = category + " random facts";
+				String content;
+				String normalizedCategory = category.toLowerCase();
 
-				Fact newFact = new Fact(category + " fact", content, date);
+				switch(normalizedCategory){
+					case "programming":
+						content = "The first programmer in history was Ada Lovelace, who wrote an algorithm for Charles Babbage's Analytical Engine in the  mid-1800s.";
+						break;
 
+				  case "History":
+            content = "The Ancient Romans used to wash their clothes in urine because the ammonia it contains acted as a powerful cleaning agent.";
+            break;
+
+          case "Science":
+            content = "A single bolt of lightning contains enough energy to toast 100,000 slices of bread.";
+            break;
+
+          case "Astronomy":
+            content = "If two pieces of the same type of metal touch in space, they will permanently bond together. This is called 'Cold Welding'.";
+            break;
+
+          case "Philosophy":
+            content = "The 'Ship of Theseus' is a thought experiment that asks whether an object that has had all of its components replaced remains fundamentally the same object.";
+            break;
+
+					default:
+						content = "Every time you learn something new, your brain physically changes its structure. Keep exploring the " + category + " category!";
+						break;
+				}
+
+				Fact newFact = new Fact(title, content, date);
 				history.add(0, newFact);
-
 				return newFact;
 		}
 

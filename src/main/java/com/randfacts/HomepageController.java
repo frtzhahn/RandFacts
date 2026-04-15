@@ -6,6 +6,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 
 public class HomepageController{
 
@@ -59,7 +61,23 @@ public class HomepageController{
 	private void handleSave(){
 			if(currentFact != null){
 					FactService.getInstance().saveFact(currentFact);
-					System.out.println("HomePage: fact saved");
+
+					// UI feedback for ux
+					String originalText = saveButton.getText();
+					saveButton.setText("...");
+
+					//prevents double clicks and ui bugs
+					saveButton.setDisable(true);
+
+					//1.5 sec delay
+					PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+					pause.setOnFinished(event -> {
+							saveButton.setText(originalText);
+							saveButton.setDisable(false);
+					});
+					pause.play();
+
+					System.out.println("Homepage: fact saved and UI effects triggered");
 			}
 	}
 
