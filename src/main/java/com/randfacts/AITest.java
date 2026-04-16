@@ -9,20 +9,20 @@ import java.util.List;
 import java.util.Map;
 import com.google.gson.Gson;
 
-class GeminiResponse{
-		List<Candidate> candidates;
+class testGeminiResponse{
+		List<testCandidate> candidates;
 
 }
 
-class Candidate{
-		Content content;
+class testCandidate{
+		testContent content;
 }
 
-class Content{
-		List<Part> parts;
+class testContent{
+		List<testPart> parts;
 }
 
-class Part{
+class testPart{
 		String text;
 }
 
@@ -87,7 +87,7 @@ public class AITest {
 						7. FACTS MUST BE FALSIFIABLE. No opinions, superlatives, or subjective claims.
 						""";
 
-						String userPrompt = "Give me a fascinating psychological fact about human relationships.";
+						String userPrompt = "Give me a fascinating psychological fact about what women wants on a relationship.";
 
 						Gson gson = new Gson();
 
@@ -113,7 +113,7 @@ public class AITest {
             
             System.out.println("response status code: " + response.statusCode());
 						if(response.statusCode() == 200){
-								GeminiResponse geminiData = gson.fromJson(response.body(), GeminiResponse.class);
+								testGeminiResponse geminiData = gson.fromJson(response.body(), testGeminiResponse.class);
 
 								if(geminiData.candidates != null && !geminiData.candidates.isEmpty()){
 										String extractedText = geminiData.candidates.get(0).content.parts.get(0).text;

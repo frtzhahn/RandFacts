@@ -2,82 +2,103 @@ package com.randfacts;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import com.google.gson.Gson;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-// import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.Dotenv;
 
-public class FactService{
-		private static FactService instance;
+// data transfer object for gson
+class GeminiResponse { List<Candidate> candidates; }
+class Candidate { Content content; }
+class Content { List<Part> parts; }
+class Part { String text; }
 
-		private List<Fact> history = new ArrayList<>();
-		private List<Fact> savedFacts = new ArrayList<>();
 
-		private FactService(){
-				history.add(new Fact("JVM: Java Virtual Machine", "The JVM is the engine that runs the Java bytecode", "2026-04-14"));
+public class FactService {
+    private static FactService instance;
+    private final HttpClient client;
+    private final Gson gson;
+    private final String apiKey;
 
-		}
+    private List<Fact> history = new ArrayList<>();
+    private List<Fact> savedFacts = new ArrayList<>();
 
-		public static FactService getInstance(){
-				if(instance == null){
-						instance = new FactService();
-				}
-				return instance;
-		}
+    private FactService() {
+        this.client = HttpClient.newHttpClient();
+        this.gson = new Gson();
+        this.apiKey = Dotenv.load().get("GEMINI_API_KEY");
+        
+        // mock data for startup
+        // history.add(new Fact("JVM: Java Virtual Machine", "The JVM is the engine that runs the Java bytecode", "2026-04-14"));
+    }
 
-		public Fact generateFact(String category){
-				String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-				String title = category + " random facts";
-				String content;
-				String normalizedCategory = category.toLowerCase();
+    public static FactService getInstance() {
+        if (instance == null) {
+            instance = new FactService();
+        }
+        return instance;
+    }
 
-				switch(normalizedCategory){
-					case "programming":
-						content = "The first programmer in history was Ada Lovelace, who wrote an algorithm for Charles Babbage's Analytical Engine in the  mid-1800s.";
-						break;
+    public CompletableFuture<Fact> generateFactFromAI(String category) {
+        String targetModel = "gemini-2.5-flash";
+        // URI variable
+        URI uri = URI.create("https://generativelanguage.googleapis.com/v1beta/models/" + targetModel + ":generateContent?key=" + apiKey);
 
-				  case "History":
-            content = "The Ancient Romans used to wash their clothes in urine because the ammonia it contains acted as a powerful cleaning agent.";
-            break;
+        String systemInstruction = """
+            YOU ARE A FACT VERIFICATION ENGINE OPERATING UNDER STRICT EPISTEMIC CONSTRAINTS.
+            (Keep your amazing rules here...)
+            """;
 
-          case "Science":
-            content = "A single bolt of lightning contains enough energy to toast 100,000 slices of bread.";
-            break;
+        // prompt dynamic based on the category parameter
+        String userPrompt = "Give me a fascinating randomized psychological fact about " + category;
 
-          case "Astronomy":
-            content = "If two pieces of the same type of metal touch in space, they will permanently bond together. This is called 'Cold Welding'.";
-            break;
+        //this.gson to avoid creating new one to save memory
+        Map<String, Object> payload = Map.of(
+            "system_instruction", Map.of(
+                "parts", List.of(Map.of("text", systemInstruction))
+            ),
+            "contents", List.of(Map.of(
+                "parts", List.of(Map.of("text", userPrompt))
+            ))
+        );
 
-          case "Philosophy":
-            content = "The 'Ship of Theseus' is a thought experiment that asks whether an object that has had all of its components replaced remains fundamentally the same object.";
-            break;
+        String jsonPayload = gson.toJson(payload);
 
-					default:
-						content = "Every time you learn something new, your brain physically changes its structure. Keep exploring the " + category + " category!";
-						break;
-				}
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(uri)
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
+            .build();
 
-				Fact newFact = new Fact(title, content, date);
-				history.add(0, newFact);
-				return newFact;
-		}
+        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+            .thenApply(response -> {
+                if (response.statusCode() != 200) {
+                    throw new RuntimeException("AI API Error: " + response.body());
+                }
 
-		public List<Fact> getHistory(){
-				return history;
-		}
+                GeminiResponse geminiData = gson.fromJson(response.body(), GeminiResponse.class);
+                String rawText = geminiData.candidates.get(0).content.parts.get(0).text;
 
-		public void saveFact(Fact fact){
-				if(!savedFacts.contains(fact)){
-						savedFacts.add(0, fact);
-				}
-		}
+                String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                Fact newFact = new Fact(category + " Fact", rawText, date);
 
-		public List<Fact> getSavedFacts(){
-				return savedFacts;
-		}
+                history.add(0, newFact);
+                return newFact;
+            });
+    }
 
-	 	public void updateSavedFact(Fact originalFact, String newContent) {
-		 		originalFact.setContent(newContent);
-			 	System.out.println("Service: data model synchronized with UI edits.");
-	 	}
-
+    // getters and helpers
+    public List<Fact> getHistory() { return history; }
+    public void saveFact(Fact fact) { if(!savedFacts.contains(fact)) savedFacts.add(0, fact); }
+    public List<Fact> getSavedFacts() { return savedFacts; }
+    public void updateSavedFact(Fact originalFact, String newContent) {
+        originalFact.setContent(newContent);
+    }
 }
+

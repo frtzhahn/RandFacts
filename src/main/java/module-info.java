@@ -8,7 +8,7 @@ module com.randfacts{
 	requires com.google.gson;
 
 	//gives permission to the library to get in the source code directory com.mocha
-	opens com.randfacts to javafx.fxml;
+	opens com.randfacts to javafx.fxml, com.google.gson;
 
 	//allows javafx library to see my source code for this project
 	//so the library can communicate in the source code

@@ -45,15 +45,28 @@ public class HomepageController{
 			return;
 		}
 
-		// fact service call to store current fact
-		this.currentFact = FactService.getInstance().generateFact(selectedCategory);
+		generateButton.setDisable(true);
+		factLabel.setText("Generating " + selectedCategory);
 
-		// updating UIcomponents using data from fact object
-		titleLabel.setText(currentFact.getTitle());
-		factLabel.setText(currentFact.getContent());
+		FactService.getInstance().generateFactFromAI(selectedCategory)
+				.thenAccept(newFact -> {
+						javafx.application.Platform.runLater(() -> {
+								this.currentFact = newFact;
+								titleLabel.setText(currentFact.getTitle());
+								factLabel.setText(currentFact.getContent());
 
-		// terminal message to verify success
-		System.out.println("Homepage: generated: " + currentFact.getTitle());
+								generateButton.setDisable(false);
+								System.out.println("Homepage: AI generated fact recieved");
+						});
+				})
+					.exceptionally(ex -> {
+							javafx.application.Platform.runLater(() -> {
+									factLabel.setText("error fetching fact: " + ex.getMessage());
+									generateButton.setDisable(false);
+							});
+							return null;
+					});
+
 
 	}
 
