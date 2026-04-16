@@ -32,7 +32,13 @@ public class HomepageController{
 	public void initialize(){
 		ObservableList<String> categories=FXCollections.observableArrayList(
 				"Programming", "History", "Science", "Physics", "Mathematics", "Politics", "Finance", "Philosophy", "Astronomy", "General");
-		categoryComboBox.setItems(categories);
+				categoryComboBox.setItems(categories);
+
+				this.currentFact = FactService.getInstance().getLatestFact();
+				if(currentFact != null){
+						titleLabel.setText(currentFact.getTitle());
+						factLabel.setText(currentFact.getContent());
+				}
 
 	}
 

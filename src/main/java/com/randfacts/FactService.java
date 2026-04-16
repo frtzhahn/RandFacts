@@ -26,6 +26,7 @@ public class FactService {
     private final HttpClient client;
     private final Gson gson;
     private final String apiKey;
+		private Fact latestFact;
 
 		private static final String DB_URL = "jdbc:sqlite:database/randfacts.db";
 		private Connection conn;
@@ -207,16 +208,48 @@ public class FactService {
 								persistentFactToDB(newFact, false);
 
                 history.add(0, newFact);
+								this.latestFact = newFact;
                 return newFact;
             });
     }
 
     // getters and helpers
-    public List<Fact> getHistory() { return history; }
-    public void saveFact(Fact fact) { if(!savedFacts.contains(fact)) savedFacts.add(0, fact); }
-    public List<Fact> getSavedFacts() { return savedFacts; }
+    public List<Fact> getHistory(){ 
+				return history; 
+		}
+
+    public void saveFact(Fact fact){ 
+				if(!savedFacts.contains(fact)){
+						savedFacts.add(0, fact);
+						updateSavedStatusInDB(fact.getId(), true);
+				}
+		}
+
+		private void updateSavedStatusInDB(int id, boolean isSaved){
+				String sql = "UPDATE facts SET is_saved = ? WHERE id = ?";
+
+				try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+						pstmt.setInt(1, isSaved ? 1 : 0);
+						pstmt.setInt(2, id);
+						pstmt.executeUpdate();
+						
+						System.out.println("\u001b[32mDatabase fact #" + id + " permanently saved\u001b[0m");
+				}
+				catch(SQLException e){
+						System.err.println("\u001b[31mdatabase update failed" + e.getMessage());
+				}
+		}
+
+    public List<Fact> getSavedFacts(){ 
+				return savedFacts; 
+		}
+
     public void updateSavedFact(Fact originalFact, String newContent) {
         originalFact.setContent(newContent);
     }
+
+		public Fact getLatestFact(){
+				return latestFact;
+		}
 }
 
