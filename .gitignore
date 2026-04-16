@@ -42,3 +42,13 @@ core.*
 .env.test.local
 .env.production.local
 
+# runtime database
+database/*
+*.db
+*.db-journal
+
+# eclipse IDE metadata
+.settings/*
+.project
+.classpath
+
