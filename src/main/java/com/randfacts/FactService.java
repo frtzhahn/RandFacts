@@ -13,6 +13,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.*;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.io.IOException;
+
 
 // data transfer object for gson
 class GeminiResponse { List<Candidate> candidates; }
@@ -43,11 +48,14 @@ public class FactService {
         // history.add(new Fact("JVM: Java Virtual Machine", "The JVM is the engine that runs the Java bytecode", "2026-04-14"));
 
 				try{
+						// creates database dir automatically if missing
+						Files.createDirectories(Paths.get("database"));
+
 						this.conn = DriverManager.getConnection(DB_URL);
 						initializeDatabase(); 
 						loadHistoryFromDB();
 				}
-				catch(SQLException e){
+				catch(SQLException | IOException e){
 						System.err.println("database connection failed" + e.getMessage());
 				}
     }
@@ -127,7 +135,7 @@ public class FactService {
     }
 
     public CompletableFuture<Fact> generateFactFromAI(String category) {
-        String targetModel = "gemini-2.5-flash";
+        String targetModel = "gemini-2.5-flash-lite";
         // URI variable
         URI uri = URI.create("https://generativelanguage.googleapis.com/v1beta/models/" + targetModel + ":generateContent?key=" + apiKey);
 
