@@ -251,5 +251,28 @@ public class FactService {
 		public Fact getLatestFact(){
 				return latestFact;
 		}
+
+		public Map<String, Integer> getCategoryStats(){
+				Map<String, Integer> stats = new java.util.LinkedHashMap<>();
+
+				String sql = """
+						SELECT title, COUNT(*) as count
+						FROM facts
+						GROUP BY title
+						ORDER BY count DESC;
+				""";
+
+				try(Statement stmt = conn.createStatement();
+						ResultSet rs = stmt.executeQuery(sql)){
+
+					while(rs.next()){
+							stats.put(rs.getString("title"), rs.getInt("count"));
+					}
+				}
+				catch(SQLException e){
+						System.err.println("\u001b[31mDatabase error: sstats query failed\u001b[0m" + e.getMessage());
+				}
+				return stats;
+		}
 }
 
