@@ -68,7 +68,29 @@ public class FactService {
 		}
 
 		private void loadHistoryFromDB(){
-				System.err.println("database test if alive");
+				String sql = "SELECT * FROM facts ORDER BY id DESC";
+
+				try(Statement stmt = conn.createStatement();
+						ResultSet rs = stmt.executeQuery(sql)){
+					
+					while(rs.next()){
+							Fact fact = new Fact(
+									rs.getString("title"),
+									rs.getString("content"),
+									rs.getString("date"),
+									rs.getInt("id")
+									);
+							history.add(fact);
+
+							if(rs.getInt("is_saved") == 1){
+									savedFacts.add(fact);
+							}
+					}
+					System.out.println("\u001b[32mDatabase: facts stored " + history.size() + " facts from your disk\u001b[0m");
+				}
+				catch(SQLException e){
+						System.err.println("\u001b31mDatabase error: failed to load history " + e.getMessage());
+				}
 		}
 
 		private void persistentFactToDB(Fact fact, boolean isSaved){
