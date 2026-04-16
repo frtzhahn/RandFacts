@@ -127,7 +127,7 @@ public class FactService {
     }
 
     public CompletableFuture<Fact> generateFactFromAI(String category) {
-        String targetModel = "gemini-2.5-flash-lite";
+        String targetModel = "gemini-2.5-flash";
         // URI variable
         URI uri = URI.create("https://generativelanguage.googleapis.com/v1beta/models/" + targetModel + ":generateContent?key=" + apiKey);
 
