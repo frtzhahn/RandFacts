@@ -12,6 +12,7 @@ import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import io.github.cdimascio.dotenv.Dotenv;
+import java.sql.*;
 
 // data transfer object for gson
 class GeminiResponse { List<Candidate> candidates; }
@@ -26,6 +27,9 @@ public class FactService {
     private final Gson gson;
     private final String apiKey;
 
+		private static final String DB_URL = "jdbc:sqlite:database/randfacts.db";
+		private Connection conn;
+
     private List<Fact> history = new ArrayList<>();
     private List<Fact> savedFacts = new ArrayList<>();
 
@@ -36,7 +40,61 @@ public class FactService {
         
         // mock data for startup
         // history.add(new Fact("JVM: Java Virtual Machine", "The JVM is the engine that runs the Java bytecode", "2026-04-14"));
+
+				try{
+						this.conn = DriverManager.getConnection(DB_URL);
+						initializeDatabase(); 
+						loadHistoryFromDB();
+				}
+				catch(SQLException e){
+						System.err.println("database connection failed" + e.getMessage());
+				}
     }
+
+		private void initializeDatabase() throws SQLException{
+				String createTableSQL = """
+						CREATE TABLE IF NOT EXISTS facts(
+									id INTEGER PRIMARY KEY AUTOINCREMENT,
+									title TEXT NOT NULL,
+									content TEXT NOT NULL, 
+									date TEXT NOT NULL, 
+									is_saved INTEGER DEFAULT 0
+								);
+				""";
+
+				try(Statement stmt = conn.createStatement()){
+						stmt.execute(createTableSQL);
+				}
+		}
+
+		private void loadHistoryFromDB(){
+				System.err.println("database test if alive");
+		}
+
+		private void persistentFactToDB(Fact fact, boolean isSaved){
+
+				String sql = "INSERT INTO facts (title, content, date, is_saved) VALUES (?, ?, ?, ?)";
+
+				try(PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
+						pstmt.setString(1, fact.getTitle());
+						pstmt.setString(2, fact.getContent());
+						pstmt.setString(3, fact.getDate());
+						pstmt.setInt(4, isSaved ? 1 : 0);
+						pstmt.executeUpdate();
+
+						ResultSet rs = pstmt.getGeneratedKeys();
+						if(rs.next()){
+								int newId = rs.getInt(1);
+								fact.setId(newId);
+								System.out.println("\u001b[32mDatabase: saved to local device commited fact #" + newId + "\u001b[0m");				
+								
+						}
+
+				}
+				catch(SQLException e){
+						System.err.println("\u001b[31mDatabase error \u001b[0m" + e.getMessage());
+				}
+		}
 
     public static FactService getInstance() {
         if (instance == null) {
@@ -46,7 +104,7 @@ public class FactService {
     }
 
     public CompletableFuture<Fact> generateFactFromAI(String category) {
-        String targetModel = "gemini-2.5-flash";
+        String targetModel = "gemini-2.5-flash-lite";
         // URI variable
         URI uri = URI.create("https://generativelanguage.googleapis.com/v1beta/models/" + targetModel + ":generateContent?key=" + apiKey);
 
@@ -124,6 +182,7 @@ public class FactService {
 
                 String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 Fact newFact = new Fact(category + " Fact", rawText, date);
+								persistentFactToDB(newFact, false);
 
                 history.add(0, newFact);
                 return newFact;

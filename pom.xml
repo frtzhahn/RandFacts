@@ -36,7 +36,7 @@
 			<version>17.0.2</version>
 		</dependency>
 
-		<!-- for json files -->
+		<!-- for gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
@@ -48,6 +48,13 @@
 			<groupId>io.github.cdimascio</groupId>
 			<artifactId>dotenv-java</artifactId>
 			<version>3.0.0</version>
+		</dependency>
+
+		<!-- for jdbc driver -->
+		<dependency>
+			<groupId>org.xerial</groupId>
+			<artifactId>sqlite-jdbc</artifactId>
+			<version>3.45.3.0</version>
 		</dependency>
 
 	</dependencies>
