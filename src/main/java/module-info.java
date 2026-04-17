@@ -11,6 +11,9 @@ module com.randfacts{
 	// allows the projectto use jdbc
 	requires java.sql;
 
+	// for background video loop
+	requires javafx.media;
+
 	//gives access to these 
 	opens com.randfacts to javafx.fxml, com.google.gson;
 

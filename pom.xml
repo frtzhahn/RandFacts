@@ -57,6 +57,13 @@
 			<version>3.45.3.0</version>
 		</dependency>
 
+		<!-- for background video -->
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-media</artifactId>
+			<version>17.0.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<!-- PLUGINS FOR TO AUTO RUN DEPENDENCIES -->
@@ -69,6 +76,12 @@
 				<version>0.0.8</version>
 					<configuration>
 						<mainClass>com.randfacts.MainApp</mainClass>
+						<options>
+							<option>-Xmx2g</option>
+							<option>--enable-native-access=javafx.graphics</option>
+							<option>--enable-native-access=javafx.media</option>
+							<option>--enable-native-access=ALL-UNNAMED</option>
+						</options>
 					</configuration>
 			</plugin>
 		</plugins>
