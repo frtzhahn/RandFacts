@@ -16,8 +16,9 @@
 	style="-fx-background-color: transparent;"
 	fx:controller="com.randfacts.HomepageController">
 
-	<Label text="How should we start today?"
-		styleClass="title" />
+	<Label text=""
+		styleClass="title"
+		fx:id="typingLabel" />
 
 	<!-- controls section -->
 	<!-- <HBox alignment="CENTER" spacing="20.0"> -->
@@ -32,7 +33,7 @@
 
 		<VBox spacing="20.0" style="-fx-padding: 30;">
 			<Label fx:id="titleLabel" 
-				text="LOREM IPSUM"
+				text=""
 				styleClass="homepage-subtitle"
 				alignment="CENTER"
 				maxWidth="Infinity"
@@ -44,7 +45,7 @@
 				hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
 				fitToWidth="true"
 				style="-fx-background-color: transparent; -fx-background: transparent;"
-				prefHeight="400.0">
+				prefHeight="350.0">
 
 			<Label fx:id="factLabel"	
 				text=""

@@ -8,6 +8,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+
 
 public class HomepageController{
 
@@ -29,6 +32,17 @@ public class HomepageController{
 	private Fact currentFact;
 
 	@FXML
+	private Label typingLabel;
+
+	private int stringIndex = 0;
+	private int charIndex = 0;
+	private final String[] messages = {
+			"How should we start today?",
+			"Don't forget to save your facts",
+			"Always double check everything you read"
+	};
+
+	@FXML
 	public void initialize(){
 		ObservableList<String> categories=FXCollections.observableArrayList(
 				"Programming", "History", "Science", "Physics", "Mathematics", "Politics", "Finance", "Philosophy", "Astronomy", "General");
@@ -40,6 +54,8 @@ public class HomepageController{
 						factLabel.setText(currentFact.getContent());
 				}
 
+				// typing animation
+				startTypingAnimation();
 	}
 
 	@FXML
@@ -98,6 +114,35 @@ public class HomepageController{
 
 					System.out.println("Homepage: fact saved and UI effects triggered");
 			}
+	}
+
+	private void startTypingAnimation(){
+			Timeline timeline = new Timeline();
+
+			KeyFrame keyFrame = new KeyFrame(Duration.millis(100), event -> {
+					String currentMessage = messages[stringIndex];
+
+					if(charIndex <= currentMessage.length()){
+							typingLabel.setText(currentMessage.substring(0, charIndex));
+							charIndex ++;
+					}
+					else{
+						timeline.pause();
+
+						PauseTransition pause = new PauseTransition(Duration.seconds(2));
+						pause.setOnFinished(e -> {
+								charIndex = 0;
+								stringIndex = (stringIndex + 1) % messages.length;
+								timeline.play();
+						});
+						pause.play();
+					}
+
+			});
+
+			timeline.getKeyFrames().add(keyFrame);
+			timeline.setCycleCount(Timeline.INDEFINITE);
+			timeline.play();
 	}
 
 
