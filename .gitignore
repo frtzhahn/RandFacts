@@ -52,3 +52,6 @@ database/*
 .project
 .classpath
 
+# .class files
+target/*
+
