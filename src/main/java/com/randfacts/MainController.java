@@ -9,6 +9,11 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import java.io.IOException;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaView;
+import javafx.scene.media.MediaPlayer;
+import java.net.URL;
+
 
 public class MainController{
 
@@ -17,6 +22,9 @@ public class MainController{
 
 	@FXML
 	private Label navHomepage, navSavedFacts, navHistory, navDashboard, navAboutUs;
+
+	@FXML
+	private MediaView backgroundMediaView;
 
 	private double xOffset = 0;
 	private double yOffset = 0;
@@ -31,6 +39,34 @@ public class MainController{
 		
 		// load landing page by default
 		loadPage("Homepage", navHomepage);
+
+    try {
+        URL mediaUrl = getClass().getResource("/com/randfacts/images/background-lean.mp4");
+        if (mediaUrl != null) {
+            Media media = new Media(mediaUrl.toExternalForm());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+
+            // Industrial Settings: Infinite Loop & Auto Play
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            mediaPlayer.setMute(true); // Ensure no random audio pops
+
+            backgroundMediaView.setMediaPlayer(mediaPlayer);
+
+            // PERFORMANCE OPTIMIZATIONS
+            backgroundMediaView.setSmooth(false); // Disables anti-aliasing for massive FPS boost
+            backgroundMediaView.setCache(true);   // GPU caching
+            backgroundMediaView.setCacheHint(javafx.scene.CacheHint.SPEED); // Prioritize speed
+
+            mediaPlayer.play();
+
+            System.out.println("\u001b[32mVideo Engine: background-lean.mp4 active (720p 30fps)\u001b[0m");
+        } else {
+            System.err.println("Video Engine Error: background-loop.mp4 not found!");
+        }
+    } catch (Exception e) {
+        System.err.println("Video Engine: Failed to initialize native codecs.");
+        e.printStackTrace();
+    }
 	}
 
 	@FXML
