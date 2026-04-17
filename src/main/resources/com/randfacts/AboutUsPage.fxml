@@ -23,7 +23,7 @@
         <Region prefHeight="1" style="-fx-background-color: #555; -fx-scale-x: 0.8;"/>
         
         <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-padding: 20px 0 0 50px;">
-            <VBox style="-fx-background-color: black; -fx-background-radius: 15px; -fx-padding: 10px;">
+            <VBox style="-fx-background-color: transparent; -fx-background-radius: 15px; -fx-padding: 10px;">
                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                     <!-- GitHub logo placeholder -->
                     <image>
@@ -31,7 +31,7 @@
                     </image>
                  </ImageView>
             </VBox>
-            <Label text="https://github.com/RandFacts" styleClass="stat-value"/>
+						<Label text="https://github.com/frtzhahn/RandFacts" styleClass="stat-value"/>
         </HBox>
     </VBox>
     
@@ -46,7 +46,7 @@
         <VBox alignment="CENTER" spacing="15.0" style="-fx-padding: 10px 0 0 0;">
             <!-- Contributor 1 -->
             <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-padding: 0 0 0 50px;">
-                <VBox style="-fx-background-color: black; -fx-background-radius: 10px; -fx-padding: 6px;">
+                <VBox style="-fx-background-color: transparent; -fx-background-radius: 10px; -fx-padding: 6px;">
                      <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                             <Image url="@images/github.png" />
@@ -58,14 +58,14 @@
             
             <!-- Contributor 2 -->
             <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-padding: 0 0 0 50px;">
-                <VBox style="-fx-background-color: black; -fx-background-radius: 10px; -fx-padding: 6px;">
+                <VBox style="-fx-background-color: transparent; -fx-background-radius: 10px; -fx-padding: 6px;">
                      <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                             <Image url="@images/github.png" />
                         </image>
                      </ImageView>
                 </VBox>
-                <Label text="https://github.com/jamesgabuni" styleClass="stat-value" />
+                <Label text="https://github.com/gabunijames31-boop" styleClass="stat-value" />
             </HBox>
         </VBox>
     </VBox>

@@ -41,9 +41,9 @@ public class SavedFactsController {
     private HBox createFactCell(Fact fact) {
         HBox cell = new HBox(20.0);
         cell.setAlignment(javafx.geometry.Pos.CENTER);
-        cell.setPrefHeight(70.0);
-        cell.setMinHeight(70.0);
-        cell.setMaxHeight(70.0);
+        cell.setPrefHeight(60.0);
+        cell.setMinHeight(60.0);
+        cell.setMaxHeight(60.0);
         cell.setStyle("-fx-cursor: hand;");
 
         // topic label with truncation and locking
