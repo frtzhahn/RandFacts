@@ -161,13 +161,13 @@ sudo dnf install git java-17-openjdk java-17-openjdk-devel maven -y
 ## Configuration
 
 ##### prerequisites:
-- you must have a gemini api key if you haven't gotten one yet get them from here:  
-`https://aistudio.google.com/api-keys`  
+- you must have a gemini api key if you haven't gotten one yet get them from **[here](https://aistudio.google.com/api-keys)**  
+  
 
 > [!IMPORTANT]  
 >never share to anyone the copied API key
 
-copy the environment template and populate it with your Gemini API key:
+copy the environment template or rename it into `.env` and populate it with your Gemini API key:
 
 ```bash
 cp .env.example .env
@@ -197,7 +197,7 @@ mvn javafx:run
 ---
 
 >[!NOTE]
->for windows users the recommended display resolution are ***100%*** 
+>for windows users the recommended display resolution is ***100%*** 
 >to avoid squeezed and distorted application interface
 
 # Project Preview

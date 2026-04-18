@@ -39,16 +39,16 @@
   -fx-font-size: 14px;
   -fx-font-family: "Pixelify Sans Regular"; 
   -fx-padding: 10 20 10 20; 
-	-fx-background-color: rgba(0, 0, 0, 0.2);
+	-fx-background-color: rgba(225, 225, 225, 0.2);
   -fx-cursor: hand; 
 }
 
 .nav-item:hover {
-	-fx-background-color: rgba(0, 0, 0, 0.5);
+	-fx-background-color: rgba(225, 225, 225, 0.4);
 }
 
 .active {
-  -fx-background-color: rgba(0,0,0, 1);
+  -fx-background-color: rgba(225,225,225, 0.6);
   -fx-background-radius: 5px;
   -fx-text-fill: white;
 }
