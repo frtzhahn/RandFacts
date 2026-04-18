@@ -37,7 +37,7 @@ public class HomepageController{
 	private int stringIndex = 0;
 	private int charIndex = 0;
 	private final String[] messages = {
-			"How should we start today Aldrin?",
+			"How should we start today?",
 			"Don't forget to save your facts",
 			"Always double check everything you read"
 	};
