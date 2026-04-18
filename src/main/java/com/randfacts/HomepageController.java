@@ -37,7 +37,7 @@ public class HomepageController{
 	private int stringIndex = 0;
 	private int charIndex = 0;
 	private final String[] messages = {
-			"How should we start today?",
+			"How should we start today Aldrin?",
 			"Don't forget to save your facts",
 			"Always double check everything you read"
 	};
@@ -45,7 +45,7 @@ public class HomepageController{
 	@FXML
 	public void initialize(){
 		ObservableList<String> categories=FXCollections.observableArrayList(
-				"Programming", "History", "Science", "Physics", "Mathematics", "Politics", "Finance", "Philosophy", "Astronomy", "General");
+				"Programming", "History", "Science", "Physics", "Mathematics", "Politics", "Finance", "Philosophy", "Astronomy", "General", "Relationships", "Human Nature", "Psychology");
 				categoryComboBox.setItems(categories);
 
 				this.currentFact = FactService.getInstance().getLatestFact();
@@ -68,7 +68,7 @@ public class HomepageController{
 		}
 
 		generateButton.setDisable(true);
-		factLabel.setText("Generating " + selectedCategory);
+		factLabel.setText("Aight bro gemini is about to give a pretty niche content on " + selectedCategory + "...");
 
 		FactService.getInstance().generateFactFromAI(selectedCategory)
 				.thenAccept(newFact -> {
@@ -78,7 +78,7 @@ public class HomepageController{
 								factLabel.setText(currentFact.getContent());
 
 								generateButton.setDisable(false);
-								System.out.println("Homepage: AI generated fact recieved");
+								System.out.println("\u001b[31mhomepage: gemini generated fact recieved\u001b[0m");
 						});
 				})
 					.exceptionally(ex -> {
