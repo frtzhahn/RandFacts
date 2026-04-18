@@ -12,34 +12,42 @@
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.randfacts.MainController">
 
-	<!-- background looping video -->
+	<!-- background looping video infinitely and auto play -->
 	<MediaView fx:id="backgroundMediaView" fitHeight="1080.0" fitWidth="1920.0" />
 
 	<stylesheets>
 		<URL value="@main.css" />
 	</stylesheets>
 
-	<!-- <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true"> -->
-	<!-- 	<image> -->
-	<!-- 		<Image url="@images/background-loop.gif" /> -->
-	<!-- 	</image> -->
-	<!-- </ImageView> -->
+	<!-- project logo anchor -->
+	<ImageView fx:id="projectLogo"
+			   fitHeight="100.0" 
+			   preserveRatio="true" 
+			   AnchorPane.topAnchor="20.0" 
+			   AnchorPane.leftAnchor="20.0"
+			   onMouseClicked="#goToHomepage"
+			   style="-fx-cursor: hand;">
+		<image>
+			<Image url="@images/project-logo.png" />
+		</image>
+	</ImageView>
 
-
+	<!-- window control bar -->
 	<HBox AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" alignment="CENTER_RIGHT" spacing="15.0" style="-fx-padding: 20px 20px 0px 0px;" onMousePressed="#onMousePressed" onMouseDragged="#onMouseDragged">
 		<Button text="—" onAction="#minimizeWindow" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand; -fx-font-weight: bold;"/>
 		<Button text="☐" onAction="#maximizeWindow" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand; -fx-font-weight: bold;"/>
 		<Button text="X" onAction="#closeWindow" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 14px; -fx-cursor: hand; -fx-font-weight: bold;"/>
 	</HBox>
 
+	<!-- main content fragment area for the project logo hehe-->
 	<StackPane fx:id="contentArea" 
-			   AnchorPane.topAnchor="80.0" 
+			   AnchorPane.topAnchor="140.0" 
 			   AnchorPane.bottomAnchor="120.0" 
 			   AnchorPane.leftAnchor="0.0" 
 			   AnchorPane.rightAnchor="0.0">
-		<!-- Content will be loaded here -->
 	</StackPane>
 
+	<!-- navigation dock so the logo will serve a bit of purpose-->
 	<HBox prefHeight="80.0"
 		AnchorPane.bottomAnchor="20.0"
 		AnchorPane.leftAnchor="0.0"
