@@ -57,8 +57,8 @@
 		styleClass="delete-popup"
 		style="-fx-background-color: rgba(0, 0, 0, 0.7); -fx-background-radius: 40px;">
 		
-		<Label text="DELETE FACT" styleClass="title" style="-fx-text-fill: #ff4d4d;" />
-		<Label text="ARE YOU SURE YOU WANT TO DELETE THIS FACT PERMANENTLY?" 
+		<Label text="DELETE FACT" styleClass="title" />
+		<Label text="you sure you wanna do this?" 
 			styleClass="description" 
 			alignment="CENTER" 
 			textAlignment="CENTER"

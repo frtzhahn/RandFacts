@@ -70,8 +70,8 @@ public class SavedFactsController {
 
         // animated bin asset
         ImageView binImageView = new ImageView(binClose);
-        binImageView.setFitWidth(30.0);
-        binImageView.setFitHeight(30.0);
+        binImageView.setFitWidth(40.0);
+        binImageView.setFitHeight(40.0);
         binImageView.setPreserveRatio(true);
 
         // delete button 
