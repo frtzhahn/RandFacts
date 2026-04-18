@@ -113,8 +113,9 @@ winget install Apache.Maven
 
 install scoop first since its not pre-installed on windows OS
 ```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-Invoke-RestMethod -Uri [https://get.scoop.sh](https://get.scoop.sh) | Invoke-Expression
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser  
+
+irm https://get.scoop.sh | iex   
 ```
 install tools and dependencies on CMD or powershell
 ```powershell
@@ -129,7 +130,7 @@ scoop install maven
 open powerShell as Administrator and run this command to install chocolatey on your system:
 
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('[https://community.chocolatey.org/install.ps1](https://community.chocolatey.org/install.ps1)'))
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))   
 ```
 install tools and dependencies
 ```powershell
