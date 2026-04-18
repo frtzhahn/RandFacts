@@ -45,7 +45,7 @@
 				hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
 				fitToWidth="true"
 				style="-fx-background-color: transparent; -fx-background: transparent;"
-				prefHeight="350.0">
+				prefHeight="400.0">
 
 			<Label fx:id="factLabel"	
 				text=""
