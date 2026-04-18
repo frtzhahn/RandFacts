@@ -12,9 +12,11 @@
 <StackPane xmlns:fx="http://javafx.com/fxml"
 		fx:controller="com.randfacts.ExtendedHistoryPageController">
 
+		<!-- header -->
 		<VBox alignment="CENTER" spacing="30.0" style="-fx-background-color: transparent;">
 				<Label text="HISTORY DETAIL" styleClass="title" />
 
+				<!-- container -->
 				<StackPane  prefHeight="650.0" prefWidth="900.0" maxWidth="1100.0" styleClass="glass-card-extended-pages">
 						<VBox spacing="20.0" style="-fx-padding: 30;">
 								<HBox alignment="CENTER_LEFT">
@@ -25,12 +27,14 @@
 
 								<Region prefHeight="1" style="-fx-background-color: rgba(225,225,225,0.15);" />
 
+								<!-- text area  -->
 								<TextArea fx:id="contentTextArea" editable="false" wrapText="true" prefHeight="400.0" styleClass="transparent-textarea"
 										style="-fx-background-color: transparent; -fx-control-inner-background: transparent; -fx-text-fill: white; -fx-font-size: 18px;" />
 							</VBox>
 
+							<!-- exit button -->
 							<AnchorPane pickOnBounds="false">
-								<Button text="X" styleClass="circle-btn" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" onAction="#handleExit" />
+								<Button text="Exit" styleClass="circle-btn" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" onAction="#handleExit" />
 						</AnchorPane>
 				</StackPane>
 		</VBox>

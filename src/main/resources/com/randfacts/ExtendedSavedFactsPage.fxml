@@ -51,14 +51,14 @@
 			<!-- controls -->
 			<AnchorPane pickOnBounds="false">
 				<Button fx:id="exitButton"
-					text="X"
+					text="Exit"
 					styleClass="circle-btn"
 					AnchorPane.bottomAnchor="20.0"
 					AnchorPane.leftAnchor="20.0"
 					onAction="#handleExit" />
 
 				<Button fx:id="saveButton"
-					text="✔"
+					text="Save"
 					styleClass="circle-btn"
 					AnchorPane.bottomAnchor="20.0"
 					AnchorPane.rightAnchor="20.0"
