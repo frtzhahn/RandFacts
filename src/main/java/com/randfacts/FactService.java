@@ -19,114 +19,133 @@ import java.nio.file.Paths;
 import java.io.IOException;
 
 
-// data transfer object for gson
+// root response object for gemini api
 class GeminiResponse { List<Candidate> candidates; }
+// candidate selection block
 class Candidate { Content content; }
+// content container for response parts
 class Content { List<Part> parts; }
+// individual text part of the response
 class Part { String text; }
 
 
 public class FactService {
+    // singleton instance for global access
     private static FactService instance;
+
+    // http client for api communication
     private final HttpClient client;
+
+    // gson for json processing
     private final Gson gson;
+
+    // api key for gemini authentication
     private final String apiKey;
-		private Fact latestFact;
 
-		private static final String DB_URL = "jdbc:sqlite:database/randfacts.db";
-		private Connection conn;
+    // reference to the most recent generated fact
+    private Fact latestFact;
 
+    // database connection url
+    private static final String DB_URL = "jdbc:sqlite:database/randfacts.db";
+
+    // active sqlite connection
+    private Connection conn;
+
+    // in-memory session history
     private List<Fact> history = new ArrayList<>();
+
+    // in-memory saved facts
     private List<Fact> savedFacts = new ArrayList<>();
 
+    // constructor initializes core components and database connection
     private FactService() {
         this.client = HttpClient.newHttpClient();
         this.gson = new Gson();
         this.apiKey = Dotenv.load().get("GEMINI_API_KEY");
         
-        // mock data for startup
-        // history.add(new Fact("JVM: Java Virtual Machine", "The JVM is the engine that runs the Java bytecode", "2026-04-14"));
+        try {
+            // creates database dir automatically if missing
+            Files.createDirectories(Paths.get("database"));
 
-				try{
-						// creates database dir automatically if missing
-						Files.createDirectories(Paths.get("database"));
-
-						this.conn = DriverManager.getConnection(DB_URL);
-						initializeDatabase(); 
-						loadHistoryFromDB();
-				}
-				catch(SQLException | IOException e){
-						System.err.println("database connection failed" + e.getMessage());
-				}
+            this.conn = DriverManager.getConnection(DB_URL);
+            initializeDatabase(); 
+            loadHistoryFromDB();
+        }
+        catch(SQLException | IOException e) {
+            System.err.println("database connection failed" + e.getMessage());
+        }
     }
 
-		private void initializeDatabase() throws SQLException{
-				String createTableSQL = """
-						CREATE TABLE IF NOT EXISTS facts(
-									id INTEGER PRIMARY KEY AUTOINCREMENT,
-									title TEXT NOT NULL,
-									content TEXT NOT NULL, 
-									date TEXT NOT NULL, 
-									is_saved INTEGER DEFAULT 0
-								);
-				""";
+    // creates facts table if missing from database
+    private void initializeDatabase() throws SQLException {
+        String createTableSQL = """
+                CREATE TABLE IF NOT EXISTS facts(
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            title TEXT NOT NULL,
+                            content TEXT NOT NULL, 
+                            date TEXT NOT NULL, 
+                            is_saved INTEGER DEFAULT 0
+                        );
+        """;
 
-				try(Statement stmt = conn.createStatement()){
-						stmt.execute(createTableSQL);
-				}
-		}
+        try(Statement stmt = conn.createStatement()) {
+            stmt.execute(createTableSQL);
+        }
+    }
 
-		private void loadHistoryFromDB(){
-				String sql = "SELECT * FROM facts ORDER BY id DESC";
+    // retrieves all stored facts from sqlite into memory lists
+    private void loadHistoryFromDB() {
+        String sql = "SELECT * FROM facts ORDER BY id DESC";
 
-				try(Statement stmt = conn.createStatement();
-						ResultSet rs = stmt.executeQuery(sql)){
-					
-					while(rs.next()){
-							Fact fact = new Fact(
-									rs.getString("title"),
-									rs.getString("content"),
-									rs.getString("date"),
-									rs.getInt("id")
-									);
-							history.add(fact);
+        try(Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)) {
+            
+            while(rs.next()) {
+                Fact fact = new Fact(
+                        rs.getString("title"),
+                        rs.getString("content"),
+                        rs.getString("date"),
+                        rs.getInt("id")
+                        );
+                history.add(fact);
 
-							if(rs.getInt("is_saved") == 1){
-									savedFacts.add(fact);
-							}
-					}
-					System.out.println("\u001b[32mDatabase: facts stored " + history.size() + " facts from your disk\u001b[0m");
-				}
-				catch(SQLException e){
-						System.err.println("\u001b31mDatabase error: failed to load history " + e.getMessage());
-				}
-		}
+                // separate saved facts into dedicated list
+                if(rs.getInt("is_saved") == 1) {
+                    savedFacts.add(fact);
+                }
+            }
+            System.out.println("\u001b[32mDatabase: facts stored " + history.size() + " facts from your disk\u001b[0m");
+        }
+        catch(SQLException e) {
+            System.err.println("\u001b31mDatabase error: failed to load history " + e.getMessage());
+        }
+    }
 
-		private void persistentFactToDB(Fact fact, boolean isSaved){
+    // inserts new generated fact into the database and assigns generated id
+    private void persistentFactToDB(Fact fact, boolean isSaved) {
+        String sql = "INSERT INTO facts (title, content, date, is_saved) VALUES (?, ?, ?, ?)";
 
-				String sql = "INSERT INTO facts (title, content, date, is_saved) VALUES (?, ?, ?, ?)";
+        try(PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            pstmt.setString(1, fact.getTitle());
+            pstmt.setString(2, fact.getContent());
+            pstmt.setString(3, fact.getDate());
+            pstmt.setInt(4, isSaved ? 1 : 0);
+            pstmt.executeUpdate();
 
-				try(PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
-						pstmt.setString(1, fact.getTitle());
-						pstmt.setString(2, fact.getContent());
-						pstmt.setString(3, fact.getDate());
-						pstmt.setInt(4, isSaved ? 1 : 0);
-						pstmt.executeUpdate();
+            // retrieve and set the auto-generated id
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if(rs.next()) {
+                int newId = rs.getInt(1);
+                fact.setId(newId);
+                System.out.println("\u001b[32mDatabase: saved to local device commited fact #" + newId + "\u001b[0m");				
+            }
+        }
+        catch(SQLException e) {
+            System.err.println("\u001b[31mDatabase error \u001b[0m" + e.getMessage());
+        }
+    }
 
-						ResultSet rs = pstmt.getGeneratedKeys();
-						if(rs.next()){
-								int newId = rs.getInt(1);
-								fact.setId(newId);
-								System.out.println("\u001b[32mDatabase: saved to local device commited fact #" + newId + "\u001b[0m");				
-								
-						}
-
-				}
-				catch(SQLException e){
-						System.err.println("\u001b[31mDatabase error \u001b[0m" + e.getMessage());
-				}
-		}
-
+    // returns singleton instance of the service
     public static FactService getInstance() {
         if (instance == null) {
             instance = new FactService();
@@ -134,66 +153,27 @@ public class FactService {
         return instance;
     }
 
+    // entry point for ai fact generation chain starting with primary model
     public CompletableFuture<Fact> generateFactFromAI(String category) {
-        String targetModel = "gemini-2.5-flash-lite";
-        // URI variable
+        String[] modelChain = {"gemini-2.5-flash", "gemini-2.5-flash-lite"};
+        return tryModelChain(category, modelChain, 0);
+    }
+
+    // handles sequential fallback logic and network error recovery between models
+    private CompletableFuture<Fact> tryModelChain(String category, String[] models, int index) {
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        // fallback to busy message if all gemini models fail
+        if (index >= models.length) {
+            System.err.println("\u001b[31mGemini AI models exhausted or ran out of api calls\u001b[0m");
+            Fact busyFact = new Fact("Gemini Status", "Gemini is too busy at the moment please try again later", date);
+            return CompletableFuture.completedFuture(busyFact);
+        }
+
+        String targetModel = models[index];
         URI uri = URI.create("https://generativelanguage.googleapis.com/v1beta/models/" + targetModel + ":generateContent?key=" + apiKey);
 
-						String systemInstruction = """
-						YOU ARE A FACT VERIFICATION ENGINE OPERATING UNDER STRICT EPISTEMIC CONSTRAINTS.
-						YOUR SOLE FUNCTION IS TO PRODUCE ONE SINGLE FACT PER RESPONSE.
-
-						ABSOLUTE OUTPUT RULES
-						1. NO MARKDOWN. No asterisks, hashes, bold, italics, or backticks.
-						2. NO BRACKET LABELS. Do not write [FACT], [SOURCE], [CONTEXT], [VERIFIED], or any similar tag.
-						3. PLAIN TEXT ONLY. Four blocks of plain prose, separated by a single blank line each.
-						4. DO NOT INCLUDE ANY PREAMBLE, INTRO, OR CLOSING STATEMENT.
-
-						Your entire response is exactly four blocks. Nothing before block one. Nothing after block four.
-
-						BLOCK STRUCTURE
-
-						BLOCK 1 - THE FACT
-						Start this block with the exact five characters: "Random Fact: " followed by a newline.
-						Write the fact as a direct declarative sentence with no label or prefix.
-						Use specific scientific names, precise numbers, exact locations, or official designations.
-						No generalizations. No hedging words like "may," "might," "could," or "some researchers believe."
-
-						BLOCK 2 - THE SOURCE
-						Start this block with the exact five characters: "the source:" followed by a newline.
-						On the next line, write the APA primary citation only.
-						Format: Author, A. A. (Year). Title. Journal, Volume(Issue), Pages.
-						Do not cite Wikipedia, trivia sites, or secondary summaries.
-
-						BLOCK 3 - THE CONTEXT
-						Start this block with the exact phrase: "The context for this fact is" and continue the sentence directly.
-						State the boundary conditions, exceptions, and nuance that prevent misinterpretation.
-						This block is mandatory. It must be substantive.
-
-						BLOCK 4 - THE TIMESTAMP
-						Write only: "Verified as of [Month Year]."
-						If the fact is subject to change (records, measurements, population counts), append: " Subject to change."
-
-						EPISTEMIC RULES
-						5. IF YOU ARE NOT HIGHLY CONFIDENT IN THE PRIMARY SOURCE, OUTPUT THIS EXACT LINE AND NOTHING ELSE:
-							INSUFFICIENT_CONFIDENCE: No verifiable primary source found. Fact withheld.
-						6. DO NOT HALLUCINATE JOURNAL NAMES, VOLUME NUMBERS, ISSUE NUMBERS, OR PAGE RANGES.
-						7. FACTS MUST BE FALSIFIABLE. No opinions, superlatives, or subjective claims.
-						""";
-
-        // prompt dynamic based on the category parameter
-        String userPrompt = "Give me a fascinating randomized fact about " + category;
-
-        //this.gson to avoid creating new one to save memory
-        Map<String, Object> payload = Map.of(
-            "system_instruction", Map.of(
-                "parts", List.of(Map.of("text", systemInstruction))
-            ),
-            "contents", List.of(Map.of(
-                "parts", List.of(Map.of("text", userPrompt))
-            ))
-        );
-
+        Map<String, Object> payload = createPayload(category);
         String jsonPayload = gson.toJson(payload);
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -202,85 +182,158 @@ public class FactService {
             .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
             .build();
 
+        System.out.println("\u001b[32mfact generation with: " + targetModel + "\u001b[0m");
+
+        // handle response or exceptions asynchronously
         return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-            .thenApply(response -> {
-                if (response.statusCode() != 200) {
-                    throw new RuntimeException("AI API Error: " + response.body());
+            .handle((response, ex) -> {
+                if (ex != null || (response != null && response.statusCode() != 200)) {
+                    if (ex != null) {
+                        System.err.println("\u001b[31m[RESILIENCE] Network error on " + targetModel + ": " + ex.getMessage() + "\u001b[0m");
+                    } else if (response != null) {
+                        System.err.println("\u001b[33m[RESILIENCE] " + targetModel + " failed (Status: " + response.statusCode() + "). Triggering Fallback...\u001b[0m");
+                    }
+                    return tryModelChain(category, models, index + 1);
                 }
-
-                GeminiResponse geminiData = gson.fromJson(response.body(), GeminiResponse.class);
-                String rawText = geminiData.candidates.get(0).content.parts.get(0).text;
-
-                String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                Fact newFact = new Fact(category + " Fact", rawText, date);
-								persistentFactToDB(newFact, false);
-
-                history.add(0, newFact);
-								this.latestFact = newFact;
-                return newFact;
-            });
+                return CompletableFuture.completedFuture(processSuccessfulResponse(response.body(), category, date));
+            })
+            .thenCompose(fut -> fut);
     }
 
-    // getters and helpers
-    public List<Fact> getHistory(){ 
-				return history; 
-		}
+    // constructs json payload with strict guardrails for ai output
+    private Map<String, Object> createPayload(String category) {
+        String systemInstruction = """
+                YOU ARE A FACT VERIFICATION ENGINE OPERATING UNDER STRICT EPISTEMIC CONSTRAINTS.
+                YOUR SOLE FUNCTION IS TO PRODUCE ONE SINGLE FACT PER RESPONSE.
 
-    public void saveFact(Fact fact){ 
-				if(!savedFacts.contains(fact)){
-						savedFacts.add(0, fact);
-						updateSavedStatusInDB(fact.getId(), true);
-				}
-		}
+                ABSOLUTE OUTPUT RULES
+                1. NO MARKDOWN. No asterisks, hashes, bold, italics, or backticks.
+                2. NO BRACKET LABELS. Do not write [FACT], [SOURCE], [CONTEXT], [VERIFIED], or any similar tag.
+                3. PLAIN TEXT ONLY. Four blocks of plain prose, separated by a single blank line each.
+                4. DO NOT INCLUDE ANY PREAMBLE, INTRO, OR CLOSING STATEMENT.
 
-		private void updateSavedStatusInDB(int id, boolean isSaved){
-				String sql = "UPDATE facts SET is_saved = ? WHERE id = ?";
+                Your entire response is exactly four blocks. Nothing before block one. Nothing after block four.
 
-				try(PreparedStatement pstmt = conn.prepareStatement(sql)){
-						pstmt.setInt(1, isSaved ? 1 : 0);
-						pstmt.setInt(2, id);
-						pstmt.executeUpdate();
-						
-						System.out.println("\u001b[32mDatabase fact #" + id + " permanently saved\u001b[0m");
-				}
-				catch(SQLException e){
-						System.err.println("\u001b[31mdatabase update failed" + e.getMessage());
-				}
-		}
+                BLOCK STRUCTURE
 
-    public List<Fact> getSavedFacts(){ 
-				return savedFacts; 
-		}
+                BLOCK 1 - THE FACT
+                Start this block with the exact five characters: "Random Fact: " followed by a newline.
+                Write the fact as a direct declarative sentence with no label or prefix.
+                Use specific scientific names, precise numbers, exact locations, or official designations.
+                No generalizations. No hedging words like "may," "might," "could," or "some researchers believe."
 
+                BLOCK 2 - THE SOURCE
+                Start this block with the exact five characters: "the source:" followed by a newline.
+                On the next line, write the APA primary citation only.
+                Format: Author, A. A. (Year). Title. Journal, Volume(Issue), Pages.
+                Do not cite Wikipedia, trivia sites, or secondary summaries.
+
+                BLOCK 3 - THE CONTEXT
+                Start this block with the exact phrase: "The context for this fact is" and continue the sentence directly.
+                State the boundary conditions, exceptions, and nuance that prevent misinterpretation.
+                This block is mandatory. It must be substantive.
+
+                BLOCK 4 - THE TIMESTAMP
+                Write only: "Verified as of [Month Year]."
+                If the fact is subject to change (records, measurements, population counts), append: " Subject to change."
+
+                EPISTEMIC RULES
+                5. IF YOU ARE NOT HIGHLY CONFIDENT IN THE PRIMARY SOURCE, OUTPUT THIS EXACT LINE AND NOTHING ELSE:
+                    INSUFFICIENT_CONFIDENCE: No verifiable primary source found. Fact withheld.
+                6. DO NOT HALLUCINATE JOURNAL NAMES, VOLUME NUMBERS, ISSUE NUMBERS, OR PAGE RANGES.
+                7. FACTS MUST BE FALSIFIABLE. No opinions, superlatives, or subjective claims.
+                """;
+
+        String userPrompt = "Give me a fascinating randomized fact about " + category;
+
+        return Map.of(
+            "system_instruction", Map.of(
+                "parts", List.of(Map.of("text", systemInstruction))
+            ),
+            "contents", List.of(Map.of(
+                "parts", List.of(Map.of("text", userPrompt))
+            ))
+        );
+    }
+
+    // parses successful ai response, saves to database, and updates session history
+    private Fact processSuccessfulResponse(String responseBody, String category, String date) {
+        GeminiResponse geminiData = gson.fromJson(responseBody, GeminiResponse.class);
+        String rawText = geminiData.candidates.get(0).content.parts.get(0).text;
+
+        Fact newFact = new Fact(category + " Fact", rawText, date);
+        persistentFactToDB(newFact, false);
+
+        history.add(0, newFact);
+        this.latestFact = newFact;
+        return newFact;
+    }
+
+    // returns list of generated facts for current session
+    public List<Fact> getHistory() { 
+        return history; 
+    }
+
+    // marks fact as saved in memory and triggers database update
+    public void saveFact(Fact fact) { 
+        if(!savedFacts.contains(fact)) {
+            savedFacts.add(0, fact);
+            updateSavedStatusInDB(fact.getId(), true);
+        }
+    }
+
+    // updates is_saved status for specific record in sqlite database
+    private void updateSavedStatusInDB(int id, boolean isSaved) {
+        String sql = "UPDATE facts SET is_saved = ? WHERE id = ?";
+
+        try(PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, isSaved ? 1 : 0);
+            pstmt.setInt(2, id);
+            pstmt.executeUpdate();
+            
+            System.out.println("\u001b[32mDatabase fact #" + id + " permanently saved\u001b[0m");
+        }
+        catch(SQLException e) {
+            System.err.println("\u001b[31mdatabase update failed" + e.getMessage());
+        }
+    }
+
+    // returns list of all facts marked as saved by user
+    public List<Fact> getSavedFacts() { 
+        return savedFacts; 
+    }
+
+    // updates the content string of an existing fact object
     public void updateSavedFact(Fact originalFact, String newContent) {
         originalFact.setContent(newContent);
     }
 
-		public Fact getLatestFact(){
-				return latestFact;
-		}
+    // returns the most recently generated fact object
+    public Fact getLatestFact() {
+        return latestFact;
+    }
 
-		public Map<String, Integer> getCategoryStats(){
-				Map<String, Integer> stats = new java.util.LinkedHashMap<>();
+    // for dashboard statistics measures facts by title category from database
+    public Map<String, Integer> getCategoryStats() {
+        Map<String, Integer> stats = new java.util.LinkedHashMap<>();
 
-				String sql = """
-						SELECT title, COUNT(*) as count
-						FROM facts
-						GROUP BY title
-						ORDER BY count DESC;
-				""";
+        String sql = """
+                SELECT title, COUNT(*) as count
+                FROM facts
+                GROUP BY title
+                ORDER BY count DESC;
+        """;
 
-				try(Statement stmt = conn.createStatement();
-						ResultSet rs = stmt.executeQuery(sql)){
+        try(Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)) {
 
-					while(rs.next()){
-							stats.put(rs.getString("title"), rs.getInt("count"));
-					}
-				}
-				catch(SQLException e){
-						System.err.println("\u001b[31mDatabase error: sstats query failed\u001b[0m" + e.getMessage());
-				}
-				return stats;
-		}
+            while(rs.next()) {
+                stats.put(rs.getString("title"), rs.getInt("count"));
+            }
+        }
+        catch(SQLException e) {
+            System.err.println("\u001b[31mDatabase error: sstats query failed\u001b[0m" + e.getMessage());
+        }
+        return stats;
+    }
 }
-
