@@ -1,11 +1,11 @@
 # RandFacts
 
 <p align ="center">
-    <img width="422" height="140" alt="Image" src="https://github.com/user-attachments/assets/fc5155fb-4fe1-4fc4-b0a6-9e5f13c72147" />
+    <img width="422" height="140" alt="Image" src="src/main/resources/com/randfacts/images/project-logo.png" />
     </p>
 
 
-Computer Programming II finals project an AI based random facts generator built on java 
+1st year Computer Programming II finals project an AI based random facts generator built on java 
 
 
 ## Tech Stack
@@ -196,10 +196,14 @@ mvn javafx:run
 
 ---
 
+>[!NOTE]
+>for windows users the recommended display resolution are ***100%*** 
+>to avoid squeezed and distorted application interface
+
 # Project Preview
 
 
 <p align="center">
-    <img width="490" height="276" alt="Image" src="https://github.com/user-attachments/assets/9b6b2449-49f6-4de9-81df-68739f5500db" />
+    <img width="490" height="276" alt="Image" src="src/main/resources/com/randfacts/images/randfacts-project-preview.gif" />
     </p>
 
