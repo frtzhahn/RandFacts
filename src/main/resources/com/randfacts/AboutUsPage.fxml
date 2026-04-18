@@ -3,11 +3,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.Region?>
 
 <VBox xmlns:fx="http://javafx.com/fxml" 
+	fx:controller="com.randfacts.AboutUsController"
 	alignment="TOP_CENTER" 
 	spacing="30.0" 
 	style="-fx-background-color: transparent; -fx-padding: 40px 0 0 0;">
@@ -25,13 +27,16 @@
         <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-padding: 20px 0 0 50px;">
             <VBox style="-fx-background-color: transparent; -fx-background-radius: 15px; -fx-padding: 10px;">
                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                    <!-- GitHub logo placeholder -->
                     <image>
                         <Image url="@images/github.png" /> 
                     </image>
                  </ImageView>
-            </VBox>
-						<Label text="https://github.com/frtzhahn/RandFacts" styleClass="stat-value"/>
+							 </VBox>
+							 <!-- added clickable url feature -->
+			<Hyperlink text="https://github.com/frtzhahn/RandFacts" 
+                       onAction="#handleLinkClick" 
+                       styleClass="stat-value" 
+                       style="-fx-underline: false; -fx-border-color: transparent;"/>
         </HBox>
     </VBox>
     
@@ -40,7 +45,7 @@
 			spacing="10.0" 
 			styleClass="glass-card-aboutus">
 
-        <Label text="PROJECT CONTRIBUTORS" styleClass="subtitle" />
+        <Label text="PROJECT PROJECT CONTRIBUTORS" styleClass="subtitle" />
         <Region prefHeight="1" style="-fx-background-color: #555; -fx-scale-x: 0.8;"/>
         
         <VBox alignment="CENTER" spacing="15.0" style="-fx-padding: 10px 0 0 0;">
@@ -53,7 +58,11 @@
                         </image>
                      </ImageView>
                 </VBox>
-                <Label text="https://github.com/frtzhahn" styleClass="stat-value" />
+							 <!-- added clickable url feature -->
+                <Hyperlink text="https://github.com/frtzhahn" 
+                           onAction="#handleLinkClick" 
+                           styleClass="stat-value" 
+                           style="-fx-underline: false; -fx-border-color: transparent;"/>
             </HBox>
             
             <!-- Contributor 2 -->
@@ -65,7 +74,11 @@
                         </image>
                      </ImageView>
                 </VBox>
-                <Label text="https://github.com/gabunijames31-boop" styleClass="stat-value" />
+							 <!-- added clickable url feature -->
+                <Hyperlink text="https://github.com/gabunijames31-boop" 
+                           onAction="#handleLinkClick" 
+                           styleClass="stat-value" 
+                           style="-fx-underline: false; -fx-border-color: transparent;"/>
             </HBox>
         </VBox>
     </VBox>
