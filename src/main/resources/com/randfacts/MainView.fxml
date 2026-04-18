@@ -10,10 +10,15 @@
 <?import java.net.URL?>
 <?import javafx.scene.media.MediaView?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.randfacts.MainController">
+<AnchorPane fx:id="rootPane" xmlns:fx="http://javafx.com/fxml" fx:controller="com.randfacts.MainController">
 
 	<!-- background looping video infinitely and auto play -->
-	<MediaView fx:id="backgroundMediaView" fitHeight="1080.0" fitWidth="1920.0" />
+	<MediaView fx:id="backgroundMediaView" 
+			   preserveRatio="false"
+			   AnchorPane.topAnchor="0.0" 
+			   AnchorPane.bottomAnchor="0.0" 
+			   AnchorPane.leftAnchor="0.0" 
+			   AnchorPane.rightAnchor="0.0" />
 
 	<stylesheets>
 		<URL value="@main.css" />

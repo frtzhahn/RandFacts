@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import java.io.IOException;
@@ -27,6 +28,9 @@ public class MainController {
     private Label navHomepage, navSavedFacts, navHistory, navDashboard, navAboutUs;
 
     @FXML
+    private AnchorPane rootPane;
+
+    @FXML
     private MediaView backgroundMediaView;
 
     private double xOffset = 0;
@@ -39,6 +43,10 @@ public class MainController {
     public void initialize() {
         // terminal status for startup check
         System.out.println("\u001b[32mRandFacts Project: maven build success on your machine\u001b[0m");
+
+        // bind video sizing to window sizing for fluid UI scaling
+        backgroundMediaView.fitWidthProperty().bind(rootPane.widthProperty());
+        backgroundMediaView.fitHeightProperty().bind(rootPane.heightProperty());
 
         // load landing page by default
         loadPage("Homepage", navHomepage);

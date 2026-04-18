@@ -28,7 +28,7 @@ public class MainApp extends Application {
         // loading the navigation shell
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/randfacts/MainView.fxml"));
         Parent root = loader.load();
-        Scene scene = new Scene(root, 1820, 980);
+        Scene scene = new Scene(root, 1366, 768);
 
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
