@@ -63,12 +63,12 @@ public class MainController {
 
                 mediaPlayer.play();
 
-                System.out.println("\u001b[32mVideo Engine: background-lean.mp4 active (720p 30fps)\u001b[0m");
+                System.out.println("\u001b[32mbackground video successfully loaded\u001b[0m");
             } else {
-                System.err.println("Video Engine Error: background-loop.mp4 not found!");
+                System.err.println("\u001b[31mbackground video failed to load\u001b[0m");
             }
         } catch (Exception e) {
-            System.err.println("Video Engine: Failed to initialize native codecs.");
+            System.err.println("\u001b[31mbackground video failed to load\u001b[0m");
             e.printStackTrace();
         }
     }
@@ -153,10 +153,10 @@ public class MainController {
             }
 
             previousPagePath = fxmlPath;
-            System.out.println("navigation engine: cross-fade load successful -> " + fxmlPath);
+            System.out.println("successful page load: " + fxmlPath);
 
         } catch (IOException e) {
-            System.err.println("engine error: failed to load " + page);
+            System.err.println("navigation error page failed to load: " + page);
             e.printStackTrace();
         }
     }
@@ -181,9 +181,9 @@ public class MainController {
                 setActiveNavItem(navToHighlight);
             }
 
-            System.out.println("navigation engine: unified load active -> " + fact.getTitle());
+            System.out.println("navigation engine load active: " + fact.getTitle());
         } catch (IOException e) {
-            System.err.println("engine error: unified load failure -> " + fxmlName);
+            System.err.println("navigation error load failure on: " + fxmlName);
             e.printStackTrace();
         }
     }

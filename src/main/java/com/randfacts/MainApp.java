@@ -19,7 +19,7 @@ public class MainApp extends Application{
 		//Loading the Navigation Shell
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/randfacts/MainView.fxml"));
 		Parent root = loader.load();
-		Scene scene = new Scene(root, 1720, 880);
+		Scene scene = new Scene(root, 1820, 980);
 
 		stage.initStyle(StageStyle.UNDECORATED);
 		stage.setScene(scene);
