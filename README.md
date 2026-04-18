@@ -1,7 +1,7 @@
 # RandFacts
 
 <p align ="center">
-    <img width="422" height="140" alt="Image" src="src/main/resources/com/randfacts/images/project-logo.png" />
+    <img width="475" height="155" alt="Image" src="src/main/resources/com/randfacts/images/project-logo-asset.png" />
     </p>
 
 
