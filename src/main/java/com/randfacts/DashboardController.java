@@ -22,8 +22,8 @@ public class DashboardController {
         // axis rotation and animation set up
         xAxis.setTickLabelRotation(45);
         xAxis.setAnimated(false); 
-        viewToggle.setItems(FXCollections.observableArrayList("GENERAL", "HISTORY", "SAVED FACTS"));
-        viewToggle.setValue("GENERAL");
+        viewToggle.setItems(FXCollections.observableArrayList("HISTORY", "SAVED FACTS"));
+        viewToggle.setValue("HISTORY");
 
         // listener for real-time data fetch on project db
         viewToggle.valueProperty().addListener((obs, oldVal, newVal) -> {
@@ -34,12 +34,12 @@ public class DashboardController {
         });
 
         // data loadss
-        updateChartData("GENERAL");
+        updateChartData("HISTORY");
     }
 
     // updates the mini header for dynamic purposes
     private void updateChartHeader(String viewName) {
-        chartHeaderLabel.setText("FREQUENT CATEGORY SEARCHES - " + viewName);
+        chartHeaderLabel.setText("RANDFACTS TOTALITY - " + viewName);
     }
 
     // refreshes chart data with surgical axis synchronization

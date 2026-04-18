@@ -338,15 +338,15 @@ public class FactService {
         return latestFact;
     }
 
-    // aggregates statistics based on data source: GENERAL (all), HISTORY (unsaved), or SAVED FACTS
+    // forms statistics based on data from the pages selected
     public Map<String, Integer> getCategoryStats(String mode) {
         Map<String, Integer> stats = new java.util.LinkedHashMap<>();
         
         // determine query based on contextual slice
         String sql = switch(mode) {
             case "SAVED FACTS" -> "SELECT title, COUNT(*) as count FROM facts WHERE is_saved = 1 GROUP BY title ORDER BY count DESC";
-            case "HISTORY" -> "SELECT title, COUNT(*) as count FROM facts WHERE is_saved = 0 GROUP BY title ORDER BY count DESC";
-            default -> "SELECT title, COUNT(*) as count FROM facts GROUP BY title ORDER BY count DESC"; // GENERAL
+            case "HISTORY" -> "SELECT title, COUNT(*) as count FROM facts GROUP BY title ORDER BY count DESC";
+            default -> "SELECT title, COUNT(*) as count FROM facts GROUP BY title ORDER BY count DESC"; 
         };
 
         try(Statement stmt = conn.createStatement();

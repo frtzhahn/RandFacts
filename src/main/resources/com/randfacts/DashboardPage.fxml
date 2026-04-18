@@ -25,7 +25,7 @@
 
 			<HBox alignment="CENTER_LEFT" spacing="20.0">
 				<!-- dynamic header label -->
-				<Label fx:id="chartHeaderLabel" text="FREQUENT CATEGORY SEARCHES - HISTORY" styleClass="subtitle"
+				<Label fx:id="chartHeaderLabel" text="RANDFACTS TOTALITY - HISTORY" styleClass="subtitle"
 					style="-fx-font-size: 14px; -fx-text-fill: rgba(255,255,255,0.6); -fx-letter-spacing: 2px;" />
 				
 				<Region HBox.hgrow="ALWAYS" />
