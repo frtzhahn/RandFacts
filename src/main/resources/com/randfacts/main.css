@@ -124,23 +124,31 @@
 
 
 .circle-btn {
-  -fx-background-color: #cccccc;
-  -fx-background-radius: 50px;
-  -fx-min-width: 45px;
-  -fx-min-height: 45px;
-  -fx-max-width: 45px;
-  -fx-max-height: 45px;
+  -fx-background-color: rgba(225,225,225,0.7);
+  -fx-padding: 5 15 5 15; 
   -fx-text-fill: black;
-  -fx-font-weight: bold;
   -fx-cursor: hand;
   -fx-font-family: "Pixelify Sans Regular";
-  -fx-font-size: 18px;
-	-fx-padding: 0;
+  -fx-font-size: 15px;
 }
 
 .circle-btn:hover {
-  -fx-background-color: white;
+  -fx-background-color: rgba(225,225,225,0.9);
 }
+
+.save-facts-btn {
+  -fx-background-color: rgba(225,225,225,0.7);
+  -fx-padding: 10 20 10 20; 
+  -fx-text-fill: black;
+  -fx-cursor: hand;
+  -fx-font-family: "Pixelify Sans Bold";
+  -fx-font-size: 15px;
+}
+
+.save-facts-btn:hover {
+  -fx-background-color: rgba(225,225,225,0.9);
+}
+
 
 .pill-btn {
   -fx-font-family: "Pixelify Sans SemiBold";
@@ -279,6 +287,15 @@
 	-fx-max-width: 500px;
 	-fx-max-height: 260px;
 }
+
+/* style for delete confirmation pop up window */
+.delete-popup{
+  -fx-font-family: "Pixelify Sans Regular"; 
+	-fx-max-width: 500px;
+	-fx-max-height: 260px;
+}
+
+
 
 /* style for the editable texts */
 .editable-texts{

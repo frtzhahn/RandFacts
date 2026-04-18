@@ -6,73 +6,69 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Button?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-	alignment="CENTER"
-	spacing="30.0"
-	style="-fx-background-color: transparent;"
+<StackPane xmlns:fx="http://javafx.com/fxml"
 	fx:controller="com.randfacts.SavedFactsController">
 
-<!-- title page -->
-<Label text="SAVED FACTS" 
-	styleClass="title" />
+	<!-- main page content -->
+	<VBox alignment="CENTER"
+		spacing="30.0"
+		style="-fx-background-color: transparent;">
 
-<!-- container -->
-	<StackPane prefHeight="650.0" prefWidth="900.0" maxWidth="1100.0" styleClass="glass-card">
-	<VBox alignment="TOP_CENTER" spacing="20.0" style="-fx-padding: 30;">
+		<!-- title page -->
+		<Label text="SAVED FACTS" 
+			styleClass="title" />
 
-		<!-- column headers on container -->
-		<HBox alignment="CENTER" spacing="0.0">
-			<Label text="CATEGORY" styleClass="subtitle" prefWidth="500" alignment="CENTER" />
-			<Region prefWidth="1" style="-fx-background-color: rgba(225,225,225,0.1);" />
-			<Label text="DATE" styleClass="subtitle" prefWidth="500" alignment="CENTER" /> 
+		<!-- container -->
+		<StackPane prefHeight="650.0" prefWidth="900.0" maxWidth="1100.0" styleClass="glass-card">
+			<VBox alignment="TOP_CENTER" spacing="20.0" style="-fx-padding: 30;">
+
+				<!-- column headers on container -->
+				<HBox alignment="CENTER" spacing="0.0">
+					<Label text="CATEGORY" styleClass="subtitle" prefWidth="500" alignment="CENTER" />
+					<Region prefWidth="1" style="-fx-background-color: rgba(225,225,225,0.1);" />
+					<Label text="DATE" styleClass="subtitle" prefWidth="500" alignment="CENTER" /> 
+				</HBox>
+
+				<Region prefHeight="1" style="-fx-background-color: rgba(225,225,225,0.1); -fx-max-width: 1000px;" />
+
+				<!-- scrollable content -->
+				<ScrollPane fx:id="historyScollPane" 
+					hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" 
+					style="-fx-background-color: transparent; -fx-background: transparent;"
+					prefHeight="450.0">
+
+					<VBox fx:id="historyContainer" 
+						spacing="15.0" 
+						alignment="TOP_CENTER" 
+						style="-fx-padding: 10 0 10 0; -fx-background-color: transparent;">
+					</VBox>
+				</ScrollPane>
+			</VBox>
+		</StackPane>
+	</VBox>
+
+	<!-- full screen delete confirmation overlay pop up -->
+	<VBox fx:id="deleteConfirmationOverlay" 
+		visible="false" 
+		alignment="CENTER" 
+		spacing="30.0" 
+		styleClass="delete-popup"
+		style="-fx-background-color: rgba(0, 0, 0, 0.7); -fx-background-radius: 40px;">
+		
+		<Label text="DELETE FACT" styleClass="title" style="-fx-text-fill: #ff4d4d;" />
+		<Label text="ARE YOU SURE YOU WANT TO DELETE THIS FACT PERMANENTLY?" 
+			styleClass="description" 
+			alignment="CENTER" 
+			textAlignment="CENTER"
+			wrapText="true"
+			maxWidth="600.0" />
+		
+		<HBox alignment="CENTER" spacing="20.0">
+			<Button text="YES" styleClass="pill-btn" onAction="#confirmDelete" />
+			<Button text="NO" styleClass="pill-btn" onAction="#cancelDelete" />
 		</HBox>
+	</VBox>
 
-		<Region prefHeight="1" style="-fx-background-color: rgba(225,225,225,0.1); -fx-max-width: 1000px;" />
-
-		<!-- scrollable content -->
-		<ScrollPane fx:id="historyScollPane" 
-			hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" 
-			style="-fx-background-color: transparent; -fx-background: transparent;"
-			prefHeight="450.0">
-
-		<VBox fx:id="historyContainer" 
-			spacing="15.0" 
-			alignment="TOP_CENTER" 
-			style="-fx-padding: 10 0 10 0; -fx-background-color: transparent;">
-
-		<HBox alignment="CENTER" 
-			spacing="20.0"
-			prefHeight="70.0"
-			minHeight="70.0"
-			maxHeight="70.0">
-
-			<Label text="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-				styleClass="text-content" 
-				prefWidth="480" 
-				wrapText="false"
-				textOverrun="ELLIPSIS"
-				style="-fx-background-color: rgba(255,255,255,0.05); -fx-padding: 0 20 0 20; -fx-background-radius: 15;"
-				maxHeight="Infinity" />
-
-			<Label text="2026-04-01 12:00:00"
-				styleClass="text-content" 
-				prefWidth="480" 
-				wrapText="false"
-				textOverrun="ELLIPSIS"
-				style="-fx-background-color: rgba(255,255,255,0.05); -fx-padding: 0 20 0 20; -fx-background-radius: 15;"
-				maxHeight="Infinity" />
-
-
-					</HBox>
-
-				</VBox>
-			</ScrollPane>
-		</VBox>
-	</StackPane>
-</VBox>
-
-
-
-
-
+</StackPane>
