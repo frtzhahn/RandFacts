@@ -45,7 +45,7 @@ public class FactService {
     // reference to the most recent generated fact
     private Fact latestFact;
 
-    // database connection url
+    // database connection url file path
     private static final String DB_URL = "jdbc:sqlite:database/randfacts.db";
 
     // active sqlite connection
@@ -114,10 +114,10 @@ public class FactService {
                     savedFacts.add(fact);
                 }
             }
-            System.out.println("\u001b[32mDatabase: facts stored " + history.size() + " facts from your disk\u001b[0m");
+            System.out.println("\u001b[32mdatabase: facts stored " + history.size() + " facts from your disk\u001b[0m");
         }
         catch(SQLException e) {
-            System.err.println("\u001b31mDatabase error: failed to load history " + e.getMessage());
+            System.err.println("\u001b31mdatabase error: failed to load history " + e.getMessage());
         }
     }
 
@@ -137,11 +137,11 @@ public class FactService {
             if(rs.next()) {
                 int newId = rs.getInt(1);
                 fact.setId(newId);
-                System.out.println("\u001b[32mDatabase: saved to local device commited fact #" + newId + "\u001b[0m");				
+                System.out.println("\u001b[32mdatabase: saved to your local device commited fact #" + newId + "\u001b[0m");				
             }
         }
         catch(SQLException e) {
-            System.err.println("\u001b[31mDatabase error \u001b[0m" + e.getMessage());
+            System.err.println("\u001b[31mdatabase error \u001b[0m" + e.getMessage());
         }
     }
 
@@ -163,7 +163,7 @@ public class FactService {
     private CompletableFuture<Fact> tryModelChain(String category, String[] models, int index) {
         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-        // fallback to busy message if all gemini models fail
+        // fallback to busy message if all gemini models fail hoping it won't lol
         if (index >= models.length) {
             System.err.println("\u001b[31mGemini AI models exhausted or ran out of api calls\u001b[0m");
             Fact busyFact = new Fact("Gemini Status", "Gemini is too busy at the moment please try again later", date);
@@ -217,24 +217,24 @@ public class FactService {
                 BLOCK STRUCTURE
 
                 BLOCK 1 - THE FACT
-                Start this block with the exact five characters: "Random Fact: " followed by a newline.
+                Start this block with the exact five characters: "Random Fact: ".
                 Write the fact as a direct declarative sentence with no label or prefix.
-                Use specific scientific names, precise numbers, exact locations, or official designations.
+                Use specific scientific names, precise numbers, exact locations, or official designation.
                 No generalizations. No hedging words like "may," "might," "could," or "some researchers believe."
 
                 BLOCK 2 - THE SOURCE
-                Start this block with the exact five characters: "the source:" followed by a newline.
+                Start this block with the exact five characters: "SOURCE:" followed by a newline.
                 On the next line, write the APA primary citation only.
                 Format: Author, A. A. (Year). Title. Journal, Volume(Issue), Pages.
                 Do not cite Wikipedia, trivia sites, or secondary summaries.
 
                 BLOCK 3 - THE CONTEXT
-                Start this block with the exact phrase: "The context for this fact is" and continue the sentence directly.
+                Start this block with the exact phrase: "This topic explores" and continue the sentence directly.
                 State the boundary conditions, exceptions, and nuance that prevent misinterpretation.
                 This block is mandatory. It must be substantive.
 
                 BLOCK 4 - THE TIMESTAMP
-                Write only: "Verified as of [Month Year]."
+                Write only: "This fact is verified as of [Month Year]."
                 If the fact is subject to change (records, measurements, population counts), append: " Subject to change."
 
                 EPISTEMIC RULES
@@ -244,6 +244,7 @@ public class FactService {
                 7. FACTS MUST BE FALSIFIABLE. No opinions, superlatives, or subjective claims.
                 """;
 
+				// main prompt that contains the task for gemini
         String userPrompt = "Give me a fascinating randomized fact about " + category;
 
         return Map.of(
@@ -298,7 +299,7 @@ public class FactService {
         }
     }
 
-    // returns list of all facts marked as saved by user
+    // returns list of all facts marked as saved by me and the potential user
     public List<Fact> getSavedFacts() { 
         return savedFacts; 
     }
@@ -308,21 +309,45 @@ public class FactService {
         originalFact.setContent(newContent);
     }
 
-    // returns the most recently generated fact object
+    // permanently removes fact from memory and database
+    public void deleteFactPermanently(Fact fact) {
+        if (fact == null) return;
+
+        // remove from in-memory history and saved lists
+        history.remove(fact);
+        savedFacts.remove(fact);
+
+        // clear latest fact reference if it matches the deleted fact
+        if (latestFact != null && latestFact.equals(fact)) {
+            latestFact = null;
+        }
+
+        String sql = "DELETE FROM facts WHERE id = ?";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, fact.getId());
+            pstmt.executeUpdate();
+            System.out.println("\u001b[32mfact #" + fact.getId() + " permanently deleted\u001b[0m");
+        } catch (SQLException e) {
+            System.err.println("\u001bdeletion failed\u001b[0m " + e.getMessage());
+        }
+    }
+
+    // returns most recently generated fact object
     public Fact getLatestFact() {
         return latestFact;
     }
 
-    // for dashboard statistics measures facts by title category from database
-    public Map<String, Integer> getCategoryStats() {
+    // aggregates statistics based on data source: GENERAL (all), HISTORY (unsaved), or SAVED FACTS
+    public Map<String, Integer> getCategoryStats(String mode) {
         Map<String, Integer> stats = new java.util.LinkedHashMap<>();
-
-        String sql = """
-                SELECT title, COUNT(*) as count
-                FROM facts
-                GROUP BY title
-                ORDER BY count DESC;
-        """;
+        
+        // determine query based on contextual slice
+        String sql = switch(mode) {
+            case "SAVED FACTS" -> "SELECT title, COUNT(*) as count FROM facts WHERE is_saved = 1 GROUP BY title ORDER BY count DESC";
+            case "HISTORY" -> "SELECT title, COUNT(*) as count FROM facts WHERE is_saved = 0 GROUP BY title ORDER BY count DESC";
+            default -> "SELECT title, COUNT(*) as count FROM facts GROUP BY title ORDER BY count DESC"; // GENERAL
+        };
 
         try(Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql)) {
@@ -332,7 +357,7 @@ public class FactService {
             }
         }
         catch(SQLException e) {
-            System.err.println("\u001b[31mDatabase error: sstats query failed\u001b[0m" + e.getMessage());
+            System.err.println("\u001b[31mDatabase error: stats query failed\u001b[0m" + e.getMessage());
         }
         return stats;
     }
